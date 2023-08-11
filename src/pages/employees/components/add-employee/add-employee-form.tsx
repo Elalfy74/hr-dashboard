@@ -24,7 +24,7 @@ interface AddEmployeeFormProps {
 }
 
 const AddEmployeeForm = ({ handleClose }: AddEmployeeFormProps) => {
-  const data = UseDepartments();
+  const departments = UseDepartments();
   const { addEmployee, isLoading } = UseAddEmployee(handleClose);
 
   const form = useForm<IFormState>({
@@ -122,7 +122,7 @@ const AddEmployeeForm = ({ handleClose }: AddEmployeeFormProps) => {
                 <FormControl>
                   <Combobox
                     placeholder='Select a department...'
-                    data={data}
+                    data={departments}
                     handleSelect={(value) => {
                       if (value) {
                         form.setValue('department', +value);

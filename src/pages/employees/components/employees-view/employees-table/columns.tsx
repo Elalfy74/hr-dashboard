@@ -6,7 +6,7 @@ import { EmployeeWithDepartment } from '@/types';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
 
-import { Status } from './status';
+import { Status } from '../components/status';
 
 export const columns: ColumnDef<EmployeeWithDepartment>[] = [
   {

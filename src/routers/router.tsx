@@ -5,6 +5,7 @@ import { Employees } from '../pages/employees';
 import { Dashboard } from '../pages/dashboard';
 import { ProtectedRoute } from './protected-route';
 import { Auth } from '../pages/auth';
+import { PublicRoute } from './public-route';
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,12 @@ export const router = createBrowserRouter([
   },
   {
     path: '/auth',
-    element: <Auth />,
+    element: <PublicRoute />,
+    children: [
+      {
+        path: '',
+        element: <Auth />,
+      },
+    ],
   },
 ]);
