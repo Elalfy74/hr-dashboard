@@ -1,8 +1,9 @@
-import { EmployeesGrid } from './employees-grid';
-import { UseEmployees } from './hooks/use-employees';
 import { useState } from 'react';
-import { Switch } from './components/switch';
+
+import { EmployeesGrid } from './employees-grid';
 import { EmployeesTable } from './employees-table';
+import { UseEmployees } from './hooks/use-employees';
+import { Switch } from './components/switch';
 
 export const EmployeesView = () => {
   const { data, handleNext, canNext, handlePrev, canPrev } = UseEmployees();

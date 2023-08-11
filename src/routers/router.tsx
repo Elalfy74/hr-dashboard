@@ -1,11 +1,12 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 
+import { ProtectedRoute } from './protected-route';
+import { PublicRoute } from './public-route';
 import { Layout } from '../layouts/layout';
+
 import { Employees } from '../pages/employees';
 import { Dashboard } from '../pages/dashboard';
-import { ProtectedRoute } from './protected-route';
 import { Auth } from '../pages/auth';
-import { PublicRoute } from './public-route';
 
 export const router = createBrowserRouter([
   {

@@ -1,5 +1,5 @@
-import { Navigate, Outlet } from 'react-router-dom';
 import { useSession } from '@/hooks/use-session';
+import { Navigate, Outlet } from 'react-router-dom';
 
 export const PublicRoute = () => {
   const { session, isLoading } = useSession();
