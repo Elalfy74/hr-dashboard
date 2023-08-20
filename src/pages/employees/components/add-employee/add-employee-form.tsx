@@ -2,8 +2,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { IFormState, addEmployeeSchema } from './add-employee-schema';
-import { UseDepartments } from './hooks/use-departments';
-import { UseAddEmployee } from './hooks/use-add-employee';
+import { useDepartments } from './hooks/use-departments';
+import { useAddEmployee } from './hooks/use-add-employee';
 
 import {
   Form,
@@ -24,8 +24,8 @@ interface AddEmployeeFormProps {
 }
 
 const AddEmployeeForm = ({ handleClose }: AddEmployeeFormProps) => {
-  const departments = UseDepartments();
-  const { addEmployee, isLoading } = UseAddEmployee(handleClose);
+  const departments = useDepartments();
+  const { addEmployee, isLoading } = useAddEmployee(handleClose);
 
   const form = useForm<IFormState>({
     resolver: zodResolver(addEmployeeSchema),

@@ -3,7 +3,7 @@ import { useQueryClient, useQuery } from '@tanstack/react-query';
 
 import { getEmployees } from '@/services/employees';
 
-export const UseEmployees = () => {
+export const useEmployees = () => {
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
 

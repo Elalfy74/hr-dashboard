@@ -33,7 +33,6 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    // manualPagination: true,
   });
   return (
     <div>

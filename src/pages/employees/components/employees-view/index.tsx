@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 import { EmployeesGrid } from './employees-grid';
 import { EmployeesTable } from './employees-table';
-import { UseEmployees } from './hooks/use-employees';
+import { useEmployees } from './hooks/use-employees';
 import { Switch } from './components/switch';
 
 export const EmployeesView = () => {
-  const { data, handleNext, canNext, handlePrev, canPrev } = UseEmployees();
+  const { data, handleNext, canNext, handlePrev, canPrev } = useEmployees();
   const [isTableView, setIsTableView] = useState(true);
 
   function handleChangeView() {

@@ -30,6 +30,4 @@ export async function addEmployee(input: IFormState) {
   });
 
   if (error) throw new Error(error.message);
-
-  return Promise.resolve();
 }
