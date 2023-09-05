@@ -4,17 +4,27 @@ import { EmployeesGrid } from './employees-grid';
 import { EmployeesTable } from './employees-table';
 import { useEmployees } from './hooks/use-employees';
 import { Switch } from './components/switch';
+import { Loader } from '@/components/ui/loader';
 
 export const EmployeesView = () => {
-  const { data, handleNext, canNext, handlePrev, canPrev } = useEmployees();
+  const { data, error, isLoading, handleNext, canNext, handlePrev, canPrev } =
+    useEmployees();
   const [isTableView, setIsTableView] = useState(true);
 
   function handleChangeView() {
     setIsTableView((prev) => !prev);
   }
 
-  if (!data) {
-    return null;
+  if (error) {
+    return <div>Something Went Wrong</div>;
+  }
+
+  if (isLoading || !data) {
+    return (
+      <div className='text-white center'>
+        <Loader />
+      </div>
+    );
   }
 
   return (

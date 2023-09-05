@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
-import { getDepartments } from '@/services/departments';
 import { useQuery } from '@tanstack/react-query';
+
+import { getDepartments } from '@/services/departments';
 
 export const useDepartments = () => {
   const { data } = useQuery({
