@@ -20,6 +20,16 @@ export async function getEmployees(page = 1, itemsPerPage = 10) {
   return data;
 }
 
+export async function getEmployeesCount() {
+  const { count, error } = await supabase
+    .from('employees')
+    .select('*', { count: 'exact', head: true });
+
+  if (error) throw new Error(error.message);
+
+  return count;
+}
+
 export async function addEmployee(input: IFormState) {
   const date_of_joining = input.date_of_joining.toISOString();
 

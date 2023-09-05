@@ -11,9 +11,7 @@ import { Status } from '../components/status';
 import { Button } from '@/components/ui/button';
 import { EyeIcon, Trash2Icon } from 'lucide-react';
 import { DeleteAlert } from '@/components/delete-alert';
-import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
-import { useToast } from '@/components/ui/use-toast';
+import { useDeleteEmployee } from '../hooks/use-delete-employee';
 
 export const columns: ColumnDef<EmployeeWithDepartment>[] = [
   {
@@ -101,24 +99,9 @@ export const columns: ColumnDef<EmployeeWithDepartment>[] = [
     header: 'Action',
     cell: ({ row }) => {
       const { id } = row.original;
-      const { toast } = useToast();
 
-      const [alertOpen, setAlertOpen] = useState(false);
-
-      function reqFun() {
-        return new Promise(function (resolve) {
-          setTimeout(resolve, 2000);
-        });
-      }
-      const { mutate, isLoading } = useMutation({
-        mutationFn: reqFun,
-        onSuccess: () => {
-          setAlertOpen(false);
-          toast({
-            description: 'Employee has been deleted',
-          });
-        },
-      });
+      const { alertOpen, setAlertOpen, isLoading, mutate } =
+        useDeleteEmployee(id);
 
       return (
         <div className='flex gap-2'>

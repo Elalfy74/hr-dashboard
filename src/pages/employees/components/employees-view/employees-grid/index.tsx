@@ -1,11 +1,17 @@
 import { animated, useTrail } from '@react-spring/web';
 
-import { Pagination } from '@/components/ui/pagination';
+import type { EmployeesData } from '../employees-table';
 
-import { EmployeesData } from '../employees-table';
+import { Pagination } from '@/components/pagination';
+
 import { EmployeeCard } from './employee-card';
 
-export const EmployeesGrid = ({ data: employees, ...props }: EmployeesData) => {
+export const EmployeesGrid = ({
+  data: employees,
+  pageCount,
+  currentPage,
+  ...props
+}: EmployeesData) => {
   const trails = useTrail(employees.length, {
     from: { opacity: 0, y: 20 },
     to: { opacity: 1, y: 0 },
@@ -20,14 +26,15 @@ export const EmployeesGrid = ({ data: employees, ...props }: EmployeesData) => {
           </animated.div>
         ))}
       </div>
-      <div className='mt-4 center'>
-        <Pagination
-          handleNext={props.handleNext}
-          handlePrev={props.handlePrev}
-          canNext={props.canNext}
-          canPrev={props.canPrev}
-        />
-      </div>
+      {pageCount && (
+        <div className='mt-4 center'>
+          <Pagination
+            handlePageClick={(e) => props.handlePageChange(e.selected)}
+            pageCount={pageCount}
+            initialPage={currentPage}
+          />
+        </div>
+      )}
     </>
   );
 };

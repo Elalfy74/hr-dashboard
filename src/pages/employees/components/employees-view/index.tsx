@@ -1,14 +1,17 @@
 import { useState } from 'react';
 
-import { EmployeesGrid } from './employees-grid';
-import { EmployeesTable } from './employees-table';
-import { useEmployees } from './hooks/use-employees';
-import { Switch } from './components/switch';
 import { Loader } from '@/components/ui/loader';
 
+import { useEmployees } from './hooks/use-employees';
+
+import { EmployeesGrid } from './employees-grid';
+import { EmployeesTable } from './employees-table';
+import { Switch } from './components/switch';
+
 export const EmployeesView = () => {
-  const { data, error, isLoading, handleNext, canNext, handlePrev, canPrev } =
+  const { data, error, isLoading, handlePageChange, pageCount, currentPage } =
     useEmployees();
+
   const [isTableView, setIsTableView] = useState(true);
 
   function handleChangeView() {
@@ -40,18 +43,16 @@ export const EmployeesView = () => {
       {isTableView ? (
         <EmployeesTable
           data={data}
-          handleNext={handleNext}
-          handlePrev={handlePrev}
-          canNext={canNext}
-          canPrev={canPrev}
+          handlePageChange={handlePageChange}
+          pageCount={pageCount}
+          currentPage={currentPage}
         />
       ) : (
         <EmployeesGrid
           data={data}
-          handleNext={handleNext}
-          handlePrev={handlePrev}
-          canNext={canNext}
-          canPrev={canPrev}
+          handlePageChange={handlePageChange}
+          pageCount={pageCount}
+          currentPage={currentPage}
         />
       )}
     </div>

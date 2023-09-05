@@ -6,24 +6,24 @@ import { columns } from './columns';
 
 export interface EmployeesData {
   data: EmployeeWithDepartment[];
-  handleNext: () => void;
-  canNext: boolean;
-  handlePrev: () => void;
-  canPrev: boolean;
+  handlePageChange: (page: number) => void;
+  pageCount?: number;
+  currentPage: number;
 }
 
 export const EmployeesTable = (props: EmployeesData) => {
-  const { data, handleNext, handlePrev, canNext, canPrev } = props;
+  const { data, pageCount, handlePageChange, currentPage } = props;
+
+  if (!pageCount) return;
 
   return (
-    <Card className='overflow-hidden '>
+    <Card className='overflow-hidden'>
       <DataTable
         columns={columns}
         data={data}
-        handleNext={handleNext}
-        handlePrev={handlePrev}
-        canNext={canNext}
-        canPrev={canPrev}
+        pageCount={pageCount}
+        handlePageChange={handlePageChange}
+        currentPage={currentPage}
       />
     </Card>
   );

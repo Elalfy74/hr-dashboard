@@ -1,12 +1,11 @@
-import { Pagination } from './pagination';
+import { Pagination } from '../pagination';
 
 interface PaginationProps {
   selectedRow: number;
   totalRows: number;
-  handleNext: () => void;
-  canNext: boolean;
-  handlePrev: () => void;
-  canPrev: boolean;
+  handlePageChange: (page: number) => void;
+  pageCount: number;
+  currentPage: number;
 }
 
 export const DataTablePagination = (props: PaginationProps) => {
@@ -16,10 +15,9 @@ export const DataTablePagination = (props: PaginationProps) => {
         {props.selectedRow} of {props.totalRows} row(s) selected.
       </div>
       <Pagination
-        handleNext={props.handleNext}
-        canNext={props.canNext}
-        handlePrev={props.handlePrev}
-        canPrev={props.canPrev}
+        pageCount={props.pageCount}
+        handlePageClick={(e) => props.handlePageChange(e.selected)}
+        initialPage={props.currentPage}
       />
     </div>
   );
