@@ -2,9 +2,11 @@ import { useMutation } from '@tanstack/react-query';
 
 import { addEmployee } from '@/services/employees';
 
-import { toast } from '@/components/ui/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 
 export const useAddEmployee = (handleClose: () => void) => {
+  const { toast } = useToast();
+
   const { mutate, isLoading } = useMutation({
     mutationFn: addEmployee,
     onSuccess: () => {

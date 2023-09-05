@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { ColumnDef } from '@tanstack/react-table';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +8,12 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
 
 import { Status } from '../components/status';
+import { Button } from '@/components/ui/button';
+import { EyeIcon, Trash2Icon } from 'lucide-react';
+import { DeleteAlert } from '@/components/delete-alert';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useToast } from '@/components/ui/use-toast';
 
 export const columns: ColumnDef<EmployeeWithDepartment>[] = [
   {
@@ -94,14 +101,49 @@ export const columns: ColumnDef<EmployeeWithDepartment>[] = [
     header: 'Action',
     cell: ({ row }) => {
       const { id } = row.original;
+      const { toast } = useToast();
+
+      const [alertOpen, setAlertOpen] = useState(false);
+
+      function reqFun() {
+        return new Promise(function (resolve) {
+          setTimeout(resolve, 2000);
+        });
+      }
+      const { mutate, isLoading } = useMutation({
+        mutationFn: reqFun,
+        onSuccess: () => {
+          setAlertOpen(false);
+          toast({
+            description: 'Employee has been deleted',
+          });
+        },
+      });
 
       return (
-        <Link
-          to={`/employees/${id}`}
-          className='px-3 py-2 rounded-full bg-mainPurple center'
-        >
-          View
-        </Link>
+        <div className='flex gap-2'>
+          <Button
+            asChild
+            variant='outline'
+            size='icon'
+            className='bg-mainPurple hover:bg-mainPurple/90'
+          >
+            <Link to={`/employees/${id}`}>
+              <EyeIcon className='w-4 h-4' />
+            </Link>
+          </Button>
+          <DeleteAlert
+            title='Employee'
+            onClick={mutate}
+            open={alertOpen}
+            onOpenChange={setAlertOpen}
+            isLoading={isLoading}
+          >
+            <Button variant='destructive' size='icon'>
+              <Trash2Icon className='w-4 h-4' />
+            </Button>
+          </DeleteAlert>
+        </div>
       );
     },
   },

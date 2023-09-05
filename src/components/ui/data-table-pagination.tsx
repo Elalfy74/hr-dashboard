@@ -1,4 +1,4 @@
-import { Button } from './button';
+import { Pagination } from './pagination';
 
 interface PaginationProps {
   selectedRow: number;
@@ -15,22 +15,12 @@ export const DataTablePagination = (props: PaginationProps) => {
       <div className='flex-1 text-sm text-muted-foreground'>
         {props.selectedRow} of {props.totalRows} row(s) selected.
       </div>
-      <Button
-        variant='outline'
-        size='sm'
-        onClick={props.handlePrev}
-        disabled={!props.canPrev}
-      >
-        Previous
-      </Button>
-      <Button
-        variant='outline'
-        size='sm'
-        onClick={props.handleNext}
-        disabled={!props.canNext}
-      >
-        Next
-      </Button>
+      <Pagination
+        handleNext={props.handleNext}
+        canNext={props.canNext}
+        handlePrev={props.handlePrev}
+        canPrev={props.canPrev}
+      />
     </div>
   );
 };

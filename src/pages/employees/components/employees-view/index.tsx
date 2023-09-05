@@ -16,7 +16,11 @@ export const EmployeesView = () => {
   }
 
   if (error) {
-    return <div>Something Went Wrong</div>;
+    return (
+      <div className='text-lg font-semibold text-center text-white'>
+        Something Went Wrong
+      </div>
+    );
   }
 
   if (isLoading || !data) {

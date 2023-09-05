@@ -1,4 +1,4 @@
-import { Mail, MoreVertical,  Smartphone } from 'lucide-react';
+import { Mail, MoreVertical, Smartphone } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
