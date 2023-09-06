@@ -2,14 +2,27 @@ import { AddJobFormState } from '@/pages/jobs/add-job/add-job-schema';
 import { supabase } from './supabase';
 import { uploadImage } from './storage';
 
-export async function getJobs(page = 1, itemsPerPage = 10) {
+interface GetJobsFilter {
+  active: boolean;
+}
+
+export async function getJobs(
+  page = 1,
+  itemsPerPage = 10,
+  filter?: GetJobsFilter
+) {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage - 1;
 
-  const { data, error } = await supabase
-    .from('jobs')
-    .select()
-    .range(startIndex, endIndex);
+  const query = supabase.from('jobs').select();
+
+  if (filter) {
+    query.eq('active', filter.active);
+  }
+
+  query.range(startIndex, endIndex);
+
+  const { data, error } = await query;
 
   if (error) throw new Error(error.message);
 

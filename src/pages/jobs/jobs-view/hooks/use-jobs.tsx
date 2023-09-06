@@ -10,6 +10,9 @@ export const useJobs = () => {
   // Because React Paginate Start From 0
   const handlePageChange = (page: number) => setPage(page + 1);
 
+  const [inActiveJobs, setInActiveJob] = useState(false);
+  const handleChangeInActive = () => setInActiveJob((prev) => !prev);
+
   const { data: count } = useQuery({
     queryKey: ['Jobs Count'],
     queryFn: getJobsCount,
@@ -21,8 +24,11 @@ export const useJobs = () => {
     isLoading: jobsLoading,
     refetch: jobsRefetch,
   } = useQuery({
-    queryKey: ['Jobs', page],
-    queryFn: () => getJobs(page, ITEMS_PER_PAGE),
+    queryKey: ['Jobs', page, !inActiveJobs],
+    queryFn: () =>
+      getJobs(page, ITEMS_PER_PAGE, {
+        active: !inActiveJobs,
+      }),
     keepPreviousData: true,
   });
 
@@ -36,5 +42,7 @@ export const useJobs = () => {
     currentPage: page,
     pageCount,
     jobsRefetch,
+    inActiveJobs,
+    handleChangeInActive,
   };
 };

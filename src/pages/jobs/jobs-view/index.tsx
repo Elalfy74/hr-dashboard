@@ -9,9 +9,6 @@ import { useJobs } from './hooks/use-jobs';
 import { JobCard } from './job-card';
 
 export const JobsView = () => {
-  const [activeJobs, setActiveJob] = useState(true);
-  const handleChangeActive = () => setActiveJob((prev) => !prev);
-
   const {
     jobsData,
     jobsError,
@@ -20,6 +17,8 @@ export const JobsView = () => {
     handlePageChange,
     currentPage,
     jobsRefetch,
+    inActiveJobs,
+    handleChangeInActive,
   } = useJobs();
 
   const lengthOfTrails = jobsData?.length || 0;
@@ -49,8 +48,8 @@ export const JobsView = () => {
     <>
       <div className='mb-4 '>
         <Switch
-          view={activeJobs}
-          handleChangeView={handleChangeActive}
+          view={inActiveJobs}
+          handleChangeView={handleChangeInActive}
           firstView={<span>Active</span>}
           secondView={<span>Inactive</span>}
           iconSize={false}
