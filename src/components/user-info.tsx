@@ -1,26 +1,9 @@
-import { type VariantProps, cva } from 'class-variance-authority';
-
-import { cn } from '@/lib/utils';
+import { type VariantProps } from 'class-variance-authority';
 
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { Badge } from './ui/badge';
+import { AppBadge, appBadgeVariants } from './app-badge';
 
-const badgeVariants = cva(
-  'rounded-full text-mainBlack font-normal capitalize ',
-  {
-    variants: {
-      variant: {
-        purple: 'bg-mainPurple',
-        cyan: 'bg-mainCyan',
-        green: 'bg-mainGreen',
-        blue: 'bg-mainCyan',
-        orange: 'bg-mainOrange',
-      },
-    },
-  }
-);
-
-export interface UserInfoProps extends VariantProps<typeof badgeVariants> {
+export interface UserInfoProps extends VariantProps<typeof appBadgeVariants> {
   id: number;
   firstName: string;
   lastName: string;
@@ -46,9 +29,7 @@ export const UserInfo = (props: UserInfoProps) => {
         </div>
       </div>
 
-      <Badge className={cn(badgeVariants({ variant: props.variant }))}>
-        {props.badgeText}
-      </Badge>
+      <AppBadge variant={props.variant}>{props.badgeText}</AppBadge>
     </div>
   );
 };

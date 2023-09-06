@@ -2,11 +2,12 @@ import { Navigate, createBrowserRouter } from 'react-router-dom';
 
 import { ProtectedRoute } from './protected-route';
 import { PublicRoute } from './public-route';
-
-import { Employees } from '../pages/employees';
-import { Dashboard } from '../pages/dashboard';
-import { Auth } from '../pages/auth';
 import { Layout } from '@/layouts/layout';
+
+import { Employees } from '@/pages/employees';
+import { Dashboard } from '@/pages/dashboard';
+import { Auth } from '@/pages/auth';
+import { Jobs } from '@/pages/jobs';
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
           {
             path: '/employees',
             element: <Employees />,
+          },
+          {
+            path: '/jobs',
+            element: <Jobs />,
           },
         ],
       },

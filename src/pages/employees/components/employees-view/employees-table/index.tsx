@@ -9,18 +9,19 @@ export interface EmployeesData {
   handlePageChange: (page: number) => void;
   pageCount?: number;
   currentPage: number;
-  refetch: () => void;
+  employeesRefetch: () => void;
 }
 
 export const EmployeesTable = (props: EmployeesData) => {
-  const { data, pageCount, handlePageChange, currentPage, refetch } = props;
+  const { data, pageCount, handlePageChange, currentPage, employeesRefetch } =
+    props;
 
   if (!pageCount) return;
 
   return (
     <Card className='overflow-hidden'>
       <DataTable
-        columns={columns(refetch)}
+        columns={columns(employeesRefetch)}
         data={data}
         pageCount={pageCount}
         handlePageChange={handlePageChange}

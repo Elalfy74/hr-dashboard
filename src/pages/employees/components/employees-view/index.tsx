@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { LayoutGridIcon, TableIcon } from 'lucide-react';
 
 import { Loader } from '@/components/ui/loader';
 
@@ -6,7 +7,7 @@ import { useEmployees } from './hooks/use-employees';
 
 import { EmployeesGrid } from './employees-grid';
 import { EmployeesTable } from './employees-table';
-import { Switch } from './components/switch';
+import { Switch } from '../../../../components/switch';
 import { FilterEmployees } from './components/filter-employees';
 
 export const EmployeesView = () => {
@@ -21,14 +22,12 @@ export const EmployeesView = () => {
     handleStatusFilter,
     departmentFilter,
     handleDepartmentFilter,
-    refetch,
+    employeesRefetch,
   } = useEmployees();
 
   const [isTableView, setIsTableView] = useState(true);
 
-  function handleChangeView() {
-    setIsTableView((prev) => !prev);
-  }
+  const handleChangeView = () => setIsTableView((prev) => !prev);
 
   if (error) {
     return (
@@ -55,7 +54,13 @@ export const EmployeesView = () => {
           departmentFilter={departmentFilter}
           handleDepartmentFilter={handleDepartmentFilter}
         />
-        <Switch isTableView={isTableView} handleChangeView={handleChangeView} />
+        <Switch
+          view={isTableView}
+          handleChangeView={handleChangeView}
+          firstView={<LayoutGridIcon />}
+          secondView={<TableIcon />}
+          iconSize={true}
+        />
       </div>
 
       {isTableView ? (
@@ -64,7 +69,7 @@ export const EmployeesView = () => {
           handlePageChange={handlePageChange}
           pageCount={pageCount}
           currentPage={currentPage}
-          refetch={refetch}
+          employeesRefetch={employeesRefetch}
         />
       ) : (
         <EmployeesGrid
@@ -72,7 +77,7 @@ export const EmployeesView = () => {
           handlePageChange={handlePageChange}
           pageCount={pageCount}
           currentPage={currentPage}
-          refetch={refetch}
+          employeesRefetch={employeesRefetch}
         />
       )}
     </div>

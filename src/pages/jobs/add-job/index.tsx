@@ -1,10 +1,9 @@
 import { useState } from 'react';
 
 import { FormDialog } from '@/components/form-dialog';
+import { AddJobForm } from './add-job-form';
 
-import AddEmployeeForm from './add-employee-form';
-
-export const AddEmployee = () => {
+export const AddJob = () => {
   const [open, setOpen] = useState(false);
 
   function handleClose() {
@@ -12,8 +11,8 @@ export const AddEmployee = () => {
   }
 
   return (
-    <FormDialog open={open} onOpenChange={setOpen} label='Employee'>
-      <AddEmployeeForm handleClose={handleClose} />
+    <FormDialog open={open} onOpenChange={setOpen} label='Job'>
+      <AddJobForm handleClose={handleClose} />
     </FormDialog>
   );
 };

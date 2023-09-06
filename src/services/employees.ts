@@ -1,3 +1,4 @@
+import { uploadImage } from './storage';
 import { supabase } from './supabase';
 
 import { IFormState } from '@/pages/employees/components/add-employee/add-employee-schema';
@@ -47,7 +48,7 @@ export async function getEmployeesCount() {
 }
 
 export async function addEmployee(input: IFormState) {
-  const avatarUrl = await uploadImage(input.avatar);
+  const avatarUrl = await uploadImage(input.avatar, 'avatars');
 
   const date_of_joining = input.date_of_joining.toISOString();
 
@@ -64,22 +65,4 @@ export async function deleteEmployee(id: number) {
   const { error } = await supabase.from('employees').delete().eq('id', id);
 
   if (error) throw new Error(error.message);
-}
-
-const BUCKET_NAME = 'avatars';
-
-async function uploadImage(img: File) {
-  const imagName = new Date().toISOString() + img.name;
-
-  const { data: imgUploadRes, error } = await supabase.storage
-    .from(BUCKET_NAME)
-    .upload(imagName, img);
-
-  if (error) throw new Error(error.message);
-
-  const {
-    data: { publicUrl },
-  } = supabase.storage.from(BUCKET_NAME).getPublicUrl(imgUploadRes.path);
-
-  return publicUrl;
 }

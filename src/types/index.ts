@@ -7,3 +7,5 @@ export type EmployeeWithDepartment = Employee & {
     name: string;
   } | null;
 };
+
+export type Job = Database['public']['Tables']['jobs']['Row'];

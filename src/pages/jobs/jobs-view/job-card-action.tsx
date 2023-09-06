@@ -1,36 +1,34 @@
 import { useState } from 'react';
 
-import { useDeleteEmployee } from '../hooks/use-delete-employee';
 import { CardActions } from '@/components/card-actions';
 
-interface EmployeeCardActions {
+import { useDeleteJob } from './hooks/use-delete-employee';
+
+interface JobCardActions {
   id: number;
-  employeesRefetch: () => void;
+  jobsRefetch: () => void;
 }
 
-export const EmployeeCardActions = ({
-  id,
-  employeesRefetch,
-}: EmployeeCardActions) => {
+export const JobCardActions = ({ id, jobsRefetch }: JobCardActions) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const onDeleteDone = () => {
     setIsMenuOpen(false);
-    employeesRefetch();
+    jobsRefetch();
   };
 
-  const { alertOpen, setAlertOpen, isLoading, deleteEmployee } =
-    useDeleteEmployee(onDeleteDone);
+  const { alertOpen, setAlertOpen, isLoading, deleteJob } =
+    useDeleteJob(onDeleteDone);
 
   return (
     <CardActions
       alertOpen={alertOpen}
-      handleDelete={() => deleteEmployee(id)}
+      handleDelete={() => deleteJob(id)}
       isLoading={isLoading}
       isMenuOpen={isMenuOpen}
       setIsMenuOpen={setIsMenuOpen}
       setAlertOpen={setAlertOpen}
-      title='Employee'
+      title='Job'
     />
   );
 };

@@ -16,10 +16,11 @@ interface DeleteAlertProps {
   open: boolean;
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
-  onClick: () => void;
+  onDelete: () => void;
   children: React.ReactNode;
   isLoading: boolean;
 }
+
 export function DeleteAlert(props: DeleteAlertProps) {
   return (
     <AlertDialog open={props.open} onOpenChange={props.onOpenChange}>
@@ -37,7 +38,7 @@ export function DeleteAlert(props: DeleteAlertProps) {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <Button
             variant='destructive'
-            onClick={props.onClick}
+            onClick={props.onDelete}
             disabled={props.isLoading}
           >
             {props.isLoading ? <Loader /> : 'Delete'}

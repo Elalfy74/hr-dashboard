@@ -24,7 +24,12 @@ export const useEmployees = () => {
     handleDepartmentFilter,
   } = useFilters();
 
-  const { data, error, isLoading, refetch } = useQuery({
+  const {
+    data,
+    error,
+    isLoading,
+    refetch: employeesRefetch,
+  } = useQuery({
     queryKey: ['employees', page, statusAsBoolean, departmentFilter],
     queryFn: () =>
       getEmployees(page, ITEMS_PER_PAGE, {
@@ -47,6 +52,6 @@ export const useEmployees = () => {
     handleStatusFilter,
     departmentFilter,
     handleDepartmentFilter,
-    refetch,
+    employeesRefetch,
   };
 };

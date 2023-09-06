@@ -3,19 +3,19 @@ import { useMutation } from '@tanstack/react-query';
 
 import { useToast } from '@/components/ui/use-toast';
 
-import { deleteEmployee } from '@/services/employees';
+import { deleteJob } from '@/services/jobs';
 
-export const useDeleteEmployee = (onDone: () => void = () => {}) => {
+export const useDeleteJob = (onDone: () => void = () => {}) => {
   const { toast } = useToast();
 
   const [alertOpen, setAlertOpen] = useState(false);
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: deleteEmployee,
+    mutationFn: deleteJob,
     onSuccess: () => {
       setAlertOpen(false);
       toast({
-        description: 'Employee has been deleted ',
+        description: 'Job has been deleted ',
       });
 
       onDone();
@@ -25,7 +25,7 @@ export const useDeleteEmployee = (onDone: () => void = () => {}) => {
   return {
     alertOpen,
     setAlertOpen,
-    deleteEmployee: mutate,
+    deleteJob: mutate,
     isLoading,
   };
 };
