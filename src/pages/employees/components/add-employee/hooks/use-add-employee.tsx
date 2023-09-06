@@ -4,7 +4,7 @@ import { addEmployee } from '@/services/employees';
 
 import { useToast } from '@/components/ui/use-toast';
 
-export const useAddEmployee = (handleClose: () => void) => {
+export const useAddEmployee = (onDone: () => void) => {
   const { toast } = useToast();
 
   const { mutate, isLoading } = useMutation({
@@ -13,7 +13,7 @@ export const useAddEmployee = (handleClose: () => void) => {
       toast({
         description: 'Employee has been added.',
       });
-      handleClose();
+      onDone();
     },
   });
 

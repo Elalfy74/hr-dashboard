@@ -3,26 +3,22 @@ import { useMutation } from '@tanstack/react-query';
 
 import { useToast } from '@/components/ui/use-toast';
 
-function reqFun() {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, 2000);
-  });
-}
+import { deleteEmployee } from '@/services/employees';
 
-export const useDeleteEmployee = (id: number, onDone?: () => void) => {
+export const useDeleteEmployee = (onDone: () => void = () => {}) => {
   const { toast } = useToast();
 
   const [alertOpen, setAlertOpen] = useState(false);
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: reqFun,
+    mutationFn: deleteEmployee,
     onSuccess: () => {
       setAlertOpen(false);
       toast({
-        description: 'Employee has been deleted with id ' + id,
+        description: 'Employee has been deleted ',
       });
 
-      onDone && onDone();
+      onDone();
     },
   });
 

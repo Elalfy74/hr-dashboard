@@ -13,7 +13,9 @@ import { EyeIcon, Trash2Icon } from 'lucide-react';
 import { DeleteAlert } from '@/components/delete-alert';
 import { useDeleteEmployee } from '../hooks/use-delete-employee';
 
-export const columns: ColumnDef<EmployeeWithDepartment>[] = [
+export const columns: (
+  onDone: () => void
+) => ColumnDef<EmployeeWithDepartment>[] = (onDone) => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -101,7 +103,7 @@ export const columns: ColumnDef<EmployeeWithDepartment>[] = [
       const { id } = row.original;
 
       const { alertOpen, setAlertOpen, isLoading, mutate } =
-        useDeleteEmployee(id);
+        useDeleteEmployee(onDone);
 
       return (
         <div className='flex gap-2'>
@@ -117,7 +119,7 @@ export const columns: ColumnDef<EmployeeWithDepartment>[] = [
           </Button>
           <DeleteAlert
             title='Employee'
-            onClick={mutate}
+            onClick={() => mutate(id)}
             open={alertOpen}
             onOpenChange={setAlertOpen}
             isLoading={isLoading}

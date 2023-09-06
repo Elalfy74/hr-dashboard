@@ -10,6 +10,7 @@ export const EmployeesGrid = ({
   data: employees,
   pageCount,
   currentPage,
+  refetch,
   ...props
 }: EmployeesData) => {
   const trails = useTrail(employees.length, {
@@ -22,7 +23,7 @@ export const EmployeesGrid = ({
       <div className='grid gap-main grid-cols-auto'>
         {trails.map((props, i) => (
           <animated.div style={props} key={employees[i].id}>
-            <EmployeeCard employee={employees[i]} />
+            <EmployeeCard employee={employees[i]} refetch={refetch} />
           </animated.div>
         ))}
       </div>

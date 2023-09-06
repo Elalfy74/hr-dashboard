@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { getEmployees, getEmployeesCount } from '@/services/employees';
+import { useFilters } from './use-filters';
 
 const ITEMS_PER_PAGE = 10;
 
 export const useEmployees = () => {
   const [page, setPage] = useState(1);
-
   // Because React Paginate Start From 0
   const handlePageChange = (page: number) => setPage(page + 1);
 
@@ -16,9 +16,21 @@ export const useEmployees = () => {
     queryFn: getEmployeesCount,
   });
 
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['employees', page],
-    queryFn: () => getEmployees(page, ITEMS_PER_PAGE),
+  const {
+    handleStatusFilter,
+    statusAsBoolean,
+    statusFilter,
+    departmentFilter,
+    handleDepartmentFilter,
+  } = useFilters();
+
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ['employees', page, statusAsBoolean, departmentFilter],
+    queryFn: () =>
+      getEmployees(page, ITEMS_PER_PAGE, {
+        active: statusAsBoolean,
+        department: departmentFilter,
+      }),
     keepPreviousData: true,
   });
 
@@ -31,5 +43,10 @@ export const useEmployees = () => {
     handlePageChange,
     currentPage: page,
     pageCount,
+    statusFilter,
+    handleStatusFilter,
+    departmentFilter,
+    handleDepartmentFilter,
+    refetch,
   };
 };

@@ -7,10 +7,22 @@ import { useEmployees } from './hooks/use-employees';
 import { EmployeesGrid } from './employees-grid';
 import { EmployeesTable } from './employees-table';
 import { Switch } from './components/switch';
+import { FilterEmployees } from './components/filter-employees';
 
 export const EmployeesView = () => {
-  const { data, error, isLoading, handlePageChange, pageCount, currentPage } =
-    useEmployees();
+  const {
+    data,
+    error,
+    isLoading,
+    handlePageChange,
+    pageCount,
+    currentPage,
+    statusFilter,
+    handleStatusFilter,
+    departmentFilter,
+    handleDepartmentFilter,
+    refetch,
+  } = useEmployees();
 
   const [isTableView, setIsTableView] = useState(true);
 
@@ -36,7 +48,13 @@ export const EmployeesView = () => {
 
   return (
     <div className='flex flex-col'>
-      <div className='self-end mb-4'>
+      <div className='flex justify-between mb-4'>
+        <FilterEmployees
+          handleStatusFilter={handleStatusFilter}
+          statusFilter={statusFilter}
+          departmentFilter={departmentFilter}
+          handleDepartmentFilter={handleDepartmentFilter}
+        />
         <Switch isTableView={isTableView} handleChangeView={handleChangeView} />
       </div>
 
@@ -46,6 +64,7 @@ export const EmployeesView = () => {
           handlePageChange={handlePageChange}
           pageCount={pageCount}
           currentPage={currentPage}
+          refetch={refetch}
         />
       ) : (
         <EmployeesGrid
@@ -53,6 +72,7 @@ export const EmployeesView = () => {
           handlePageChange={handlePageChange}
           pageCount={pageCount}
           currentPage={currentPage}
+          refetch={refetch}
         />
       )}
     </div>

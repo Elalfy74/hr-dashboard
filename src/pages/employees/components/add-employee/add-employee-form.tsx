@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { IFormState, addEmployeeSchema } from './add-employee-schema';
-import { useDepartments } from './hooks/use-departments';
+import { useDepartments } from '../employees-view/hooks/use-departments';
 import { useAddEmployee } from './hooks/use-add-employee';
 
 import {

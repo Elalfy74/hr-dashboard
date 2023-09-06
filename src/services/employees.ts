@@ -2,18 +2,34 @@ import { supabase } from './supabase';
 
 import { IFormState } from '@/pages/employees/components/add-employee/add-employee-schema';
 
-export async function getEmployees(page = 1, itemsPerPage = 10) {
+interface Filter {
+  active?: boolean;
+  department?: string;
+}
+
+export async function getEmployees(
+  page = 1,
+  itemsPerPage = 10,
+  filter: Filter
+) {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage - 1;
 
-  const { data, error } = await supabase
+  const query = supabase
     .from('employees')
-    .select(
-      `*, departments (
-        name
-    )`
-    )
-    .range(startIndex, endIndex);
+    .select(`*, departments!inner (name)`);
+
+  if (filter.active !== undefined) {
+    query.eq('active', filter.active);
+  }
+
+  if (filter.department) {
+    query.eq('departments.name', filter.department);
+  }
+
+  query.range(startIndex, endIndex);
+
+  const { data, error } = await query;
 
   if (error) throw new Error(error.message);
 
@@ -31,13 +47,39 @@ export async function getEmployeesCount() {
 }
 
 export async function addEmployee(input: IFormState) {
+  const avatarUrl = await uploadImage(input.avatar);
+
   const date_of_joining = input.date_of_joining.toISOString();
 
   const { error } = await supabase.from('employees').insert({
     ...input,
     date_of_joining,
-    avatar: undefined,
+    avatar: avatarUrl,
   });
 
   if (error) throw new Error(error.message);
+}
+
+export async function deleteEmployee(id: number) {
+  const { error } = await supabase.from('employees').delete().eq('id', id);
+
+  if (error) throw new Error(error.message);
+}
+
+const BUCKET_NAME = 'avatars';
+
+async function uploadImage(img: File) {
+  const imagName = new Date().toISOString() + img.name;
+
+  const { data: imgUploadRes, error } = await supabase.storage
+    .from(BUCKET_NAME)
+    .upload(imagName, img);
+
+  if (error) throw new Error(error.message);
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from(BUCKET_NAME).getPublicUrl(imgUploadRes.path);
+
+  return publicUrl;
 }
