@@ -13,13 +13,13 @@ interface JobCardActions {
 export const JobCardActions = ({ id, jobsRefetch }: JobCardActions) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const onDeleteDone = () => {
+  const onActionDone = () => {
     setIsMenuOpen(false);
     jobsRefetch();
   };
 
   const { alertOpen, setAlertOpen, isLoading, deleteJob } =
-    useDeleteJob(onDeleteDone);
+    useDeleteJob(onActionDone);
 
   return (
     <CardActions
@@ -30,7 +30,7 @@ export const JobCardActions = ({ id, jobsRefetch }: JobCardActions) => {
       setIsMenuOpen={setIsMenuOpen}
       setAlertOpen={setAlertOpen}
       title='Job'
-      editComponent={<EditJob id={id} />}
+      editComponent={<EditJob id={id} onUpdateDone={onActionDone} />}
     />
   );
 };
