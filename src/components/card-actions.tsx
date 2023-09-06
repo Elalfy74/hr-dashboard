@@ -18,6 +18,7 @@ interface CardActionsProps {
   alertOpen: boolean;
   setAlertOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isLoading: boolean;
+  editComponent: React.ReactNode;
 }
 
 export const CardActions = (props: CardActionsProps) => {
@@ -29,6 +30,7 @@ export const CardActions = (props: CardActionsProps) => {
     alertOpen,
     setAlertOpen,
     isLoading,
+    editComponent,
   } = props;
 
   return (
@@ -39,7 +41,9 @@ export const CardActions = (props: CardActionsProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem className='cursor-pointer'>View</DropdownMenuItem>
+        <DropdownMenuItem className='cursor-pointer' asChild>
+          {editComponent}
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <DeleteAlert
@@ -49,7 +53,7 @@ export const CardActions = (props: CardActionsProps) => {
             onDelete={handleDelete}
             isLoading={isLoading}
           >
-            <button className='text-red-400 cursor-pointer px-2 py-1.5'>
+            <button className='w-full text-left text-red-400 cursor-pointer px-2 py-1.5'>
               Delete
             </button>
           </DeleteAlert>

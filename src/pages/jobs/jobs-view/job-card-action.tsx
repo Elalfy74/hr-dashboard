@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { CardActions } from '@/components/card-actions';
 
 import { useDeleteJob } from './hooks/use-delete-employee';
+import { EditJob } from '../edit-job';
 
 interface JobCardActions {
   id: number;
@@ -29,6 +30,7 @@ export const JobCardActions = ({ id, jobsRefetch }: JobCardActions) => {
       setIsMenuOpen={setIsMenuOpen}
       setAlertOpen={setAlertOpen}
       title='Job'
+      editComponent={<EditJob id={id} />}
     />
   );
 };

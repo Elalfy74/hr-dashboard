@@ -11,7 +11,7 @@ export const AddJob = () => {
   }
 
   return (
-    <FormDialog open={open} onOpenChange={setOpen} label='Job'>
+    <FormDialog action='add' open={open} onOpenChange={setOpen} label='Job'>
       <AddJobForm handleClose={handleClose} />
     </FormDialog>
   );

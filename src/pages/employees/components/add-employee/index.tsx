@@ -12,7 +12,12 @@ export const AddEmployee = () => {
   }
 
   return (
-    <FormDialog open={open} onOpenChange={setOpen} label='Employee'>
+    <FormDialog
+      action='add'
+      open={open}
+      onOpenChange={setOpen}
+      label='Employee'
+    >
       <AddEmployeeForm handleClose={handleClose} />
     </FormDialog>
   );

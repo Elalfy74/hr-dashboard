@@ -1,6 +1,8 @@
-import { AddJobFormState } from '@/pages/jobs/add-job/add-job-schema';
 import { supabase } from './supabase';
 import { uploadImage } from './storage';
+
+import type { AddJobFormState } from '@/pages/jobs/add-job/add-job-schema';
+import type { EditJobFormState } from '@/pages/jobs/edit-job/edit-job-schema';
 
 interface GetJobsFilter {
   active: boolean;
@@ -39,6 +41,18 @@ export async function getJobsCount() {
   return count;
 }
 
+export async function getSingleJob(id: number) {
+  const { data, error } = await supabase
+    .from('jobs')
+    .select()
+    .eq('id', id)
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
 export async function addJob(input: AddJobFormState) {
   const logoUrl = await uploadImage(input.logo, 'logos');
 
@@ -52,6 +66,30 @@ export async function addJob(input: AddJobFormState) {
 
 export async function deleteJob(id: number) {
   const { error } = await supabase.from('jobs').delete().eq('id', id);
+
+  if (error) throw new Error(error.message);
+}
+
+export async function updateJob({
+  id,
+  input,
+}: {
+  id: number;
+  input: EditJobFormState;
+}) {
+  let logoUrl;
+
+  if (input.logo) {
+    logoUrl = await uploadImage(input.logo, 'logos');
+  }
+
+  const { error } = await supabase
+    .from('jobs')
+    .update({
+      ...input,
+      logo: logoUrl,
+    })
+    .eq('id', id);
 
   if (error) throw new Error(error.message);
 }
