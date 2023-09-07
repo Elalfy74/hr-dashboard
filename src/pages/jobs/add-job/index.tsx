@@ -1,18 +1,19 @@
-import { useState } from 'react';
-
 import { FormDialog } from '@/components/form-dialog';
+import { useDisclosure } from '@/hooks/use-disclosure';
+
 import { AddJobForm } from './add-job-form';
 
 export const AddJob = () => {
-  const [open, setOpen] = useState(false);
-
-  function handleClose() {
-    setOpen(false);
-  }
+  const { isOpen, setIsOpened, close } = useDisclosure(false);
 
   return (
-    <FormDialog action='add' open={open} onOpenChange={setOpen} label='Job'>
-      <AddJobForm handleClose={handleClose} />
+    <FormDialog
+      label='Job'
+      action='add'
+      open={isOpen}
+      onOpenChange={setIsOpened}
+    >
+      <AddJobForm onDone={close} />
     </FormDialog>
   );
 };

@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { useDeleteEmployee } from '../hooks/use-delete-employee';
 import { CardActions } from '@/components/card-actions';
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 interface EmployeeCardActions {
   id: number;
@@ -12,25 +13,27 @@ export const EmployeeCardActions = ({
   id,
   employeesRefetch,
 }: EmployeeCardActions) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isOpen, setIsOpened, close } = useDisclosure();
 
   const onDeleteDone = () => {
-    setIsMenuOpen(false);
+    close();
     employeesRefetch();
   };
 
   const { alertOpen, setAlertOpen, isLoading, deleteEmployee } =
     useDeleteEmployee(onDeleteDone);
 
+  //TODO change edit component
   return (
     <CardActions
+      title='Employee'
       alertOpen={alertOpen}
+      setAlertOpen={setAlertOpen}
+      isMenuOpen={isOpen}
+      setIsMenuOpen={setIsOpened}
       handleDelete={() => deleteEmployee(id)}
       isLoading={isLoading}
-      isMenuOpen={isMenuOpen}
-      setIsMenuOpen={setIsMenuOpen}
-      setAlertOpen={setAlertOpen}
-      title='Employee'
+      editComponent={<span>Edit</span>}
     />
   );
 };

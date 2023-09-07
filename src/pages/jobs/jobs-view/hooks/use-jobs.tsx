@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { getJobs, getJobsCount } from '@/services/jobs';
+import { useBoolean } from '@/hooks/use-boolean';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -10,8 +11,7 @@ export const useJobs = () => {
   // Because React Paginate Start From 0
   const handlePageChange = (page: number) => setPage(page + 1);
 
-  const [inActiveJobs, setInActiveJob] = useState(false);
-  const handleChangeInActive = () => setInActiveJob((prev) => !prev);
+  const { value: isActiveJobsView, toggle: toggleIsActive } = useBoolean(true);
 
   const { data: count } = useQuery({
     queryKey: ['Jobs Count'],
@@ -24,10 +24,10 @@ export const useJobs = () => {
     isLoading: jobsLoading,
     refetch: jobsRefetch,
   } = useQuery({
-    queryKey: ['Jobs', page, !inActiveJobs],
+    queryKey: ['Jobs', page, isActiveJobsView],
     queryFn: () =>
       getJobs(page, ITEMS_PER_PAGE, {
-        active: !inActiveJobs,
+        active: isActiveJobsView,
       }),
     keepPreviousData: true,
   });
@@ -42,7 +42,7 @@ export const useJobs = () => {
     currentPage: page,
     pageCount,
     jobsRefetch,
-    inActiveJobs,
-    handleChangeInActive,
+    isActiveJobsView,
+    toggleIsActive,
   };
 };

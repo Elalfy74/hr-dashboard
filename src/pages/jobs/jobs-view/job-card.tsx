@@ -6,13 +6,12 @@ import type { Job } from '@/types';
 
 import { JobCardActions } from './job-card-action';
 
-export const JobCard = ({
-  job,
-  jobsRefetch,
-}: {
+interface JobCardProps {
   job: Job;
   jobsRefetch: () => void;
-}) => {
+}
+
+export const JobCard = ({ job, jobsRefetch }: JobCardProps) => {
   return (
     <Card className='h-[250px] flex flex-col'>
       <CardHeader className='p-3 pb-0'>

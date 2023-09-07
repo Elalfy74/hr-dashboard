@@ -1,18 +1,13 @@
 import { animated, useTrail } from '@react-spring/web';
 
 import type { EmployeesData } from '../employees-table';
-
 import { Pagination } from '@/components/pagination';
 
 import { EmployeeCard } from './employee-card';
 
-export const EmployeesGrid = ({
-  data: employees,
-  pageCount,
-  currentPage,
-  refetch,
-  ...props
-}: EmployeesData) => {
+export const EmployeesGrid = (props: EmployeesData) => {
+  const { data: employees, employeesRefetch, currentPage, pageCount } = props;
+
   const trails = useTrail(employees.length, {
     from: { opacity: 0, y: 20 },
     to: { opacity: 1, y: 0 },
@@ -20,10 +15,13 @@ export const EmployeesGrid = ({
 
   return (
     <>
-      <div className='grid gap-main grid-cols-auto'>
-        {trails.map((props, i) => (
-          <animated.div style={props} key={employees[i].id}>
-            <EmployeeCard employee={employees[i]} refetch={refetch} />
+      <div className='grid gap-main grid-cols-autoFill'>
+        {trails.map((styles, i) => (
+          <animated.div style={styles} key={employees[i].id}>
+            <EmployeeCard
+              employee={employees[i]}
+              employeesRefetch={employeesRefetch}
+            />
           </animated.div>
         ))}
       </div>

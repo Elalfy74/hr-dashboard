@@ -11,8 +11,8 @@ import {
 import { cn } from '@/lib/utils';
 
 interface FormDialogProps {
-  action: 'add' | 'edit';
   label: string;
+  action: 'add' | 'edit';
   open: boolean;
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
   children: React.ReactNode;

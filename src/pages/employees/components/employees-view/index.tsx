@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { LayoutGridIcon, TableIcon } from 'lucide-react';
 
+import { useBoolean } from '@/hooks/use-boolean';
 import { Loader } from '@/components/ui/loader';
 
 import { useEmployees } from './hooks/use-employees';
@@ -25,9 +25,7 @@ export const EmployeesView = () => {
     employeesRefetch,
   } = useEmployees();
 
-  const [isTableView, setIsTableView] = useState(true);
-
-  const handleChangeView = () => setIsTableView((prev) => !prev);
+  const { value: isTableView, toggle } = useBoolean(true);
 
   if (error) {
     return (
@@ -55,10 +53,10 @@ export const EmployeesView = () => {
           handleDepartmentFilter={handleDepartmentFilter}
         />
         <Switch
-          view={isTableView}
-          handleChangeView={handleChangeView}
-          firstView={<LayoutGridIcon />}
-          secondView={<TableIcon />}
+          isFirstActive={isTableView}
+          toggleActive={toggle}
+          firstView={<TableIcon />}
+          secondView={<LayoutGridIcon />}
           iconSize={true}
         />
       </div>

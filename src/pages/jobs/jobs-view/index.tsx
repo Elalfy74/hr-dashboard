@@ -17,8 +17,8 @@ export const JobsView = () => {
     handlePageChange,
     currentPage,
     jobsRefetch,
-    inActiveJobs,
-    handleChangeInActive,
+    isActiveJobsView,
+    toggleIsActive,
   } = useJobs();
 
   const lengthOfTrails = jobsData?.length || 0;
@@ -48,14 +48,14 @@ export const JobsView = () => {
     <>
       <div className='mb-4 '>
         <Switch
-          view={inActiveJobs}
-          handleChangeView={handleChangeInActive}
+          isFirstActive={isActiveJobsView}
+          toggleActive={toggleIsActive}
           firstView={<span>Active</span>}
           secondView={<span>Inactive</span>}
           iconSize={false}
         />
       </div>
-      <div className='grid gap-main grid-cols-auto'>
+      <div className='grid gap-main grid-cols-autoFill'>
         {trails.map((props, i) => (
           <animated.div style={props} key={jobsData[i].id}>
             <JobCard job={jobsData[i]} jobsRefetch={jobsRefetch} />

@@ -1,9 +1,8 @@
-import { useState } from 'react';
-
 import { CardActions } from '@/components/card-actions';
 
-import { useDeleteJob } from './hooks/use-delete-employee';
+import { useDeleteJob } from './hooks/use-delete-job';
 import { EditJob } from '../edit-job';
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 interface JobCardActions {
   id: number;
@@ -11,10 +10,11 @@ interface JobCardActions {
 }
 
 export const JobCardActions = ({ id, jobsRefetch }: JobCardActions) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  //  Actions Menu
+  const { isOpen, setIsOpened, close } = useDisclosure(false);
 
   const onActionDone = () => {
-    setIsMenuOpen(false);
+    close();
     jobsRefetch();
   };
 
@@ -23,13 +23,13 @@ export const JobCardActions = ({ id, jobsRefetch }: JobCardActions) => {
 
   return (
     <CardActions
+      title='Job'
       alertOpen={alertOpen}
+      setAlertOpen={setAlertOpen}
+      isMenuOpen={isOpen}
+      setIsMenuOpen={setIsOpened}
       handleDelete={() => deleteJob(id)}
       isLoading={isLoading}
-      isMenuOpen={isMenuOpen}
-      setIsMenuOpen={setIsMenuOpen}
-      setAlertOpen={setAlertOpen}
-      title='Job'
       editComponent={<EditJob id={id} onUpdateDone={onActionDone} />}
     />
   );

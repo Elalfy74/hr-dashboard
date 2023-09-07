@@ -26,11 +26,11 @@ import { AddJobFormState, addJobSchema } from './add-job-schema';
 import { useAddJob } from './hooks/use-add-job';
 
 interface AddJobFormProps {
-  handleClose: () => void;
+  onDone: () => void;
 }
 
-export const AddJobForm = ({ handleClose }: AddJobFormProps) => {
-  const { addJob, isLoading } = useAddJob(handleClose);
+export const AddJobForm = ({ onDone }: AddJobFormProps) => {
+  const { addJob, isLoading } = useAddJob(onDone);
 
   const form = useForm<AddJobFormState>({
     resolver: zodResolver(addJobSchema),

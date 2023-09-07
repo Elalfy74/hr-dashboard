@@ -1,26 +1,20 @@
-import { useState } from 'react';
-
 import { FormDialog } from '@/components/form-dialog';
 import { Loader } from '@/components/ui/loader';
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { EditJobForm } from './edit-job-form';
 import { useEditJob } from './hooks/use-edit-job';
 
-export const EditJob = ({
-  id,
-  onUpdateDone,
-}: {
+interface EditJobProps {
   id: number;
   onUpdateDone: () => void;
-}) => {
-  const [open, setOpen] = useState(false);
+}
 
-  function handleClose() {
-    setOpen(false);
-  }
+export const EditJob = ({ id, onUpdateDone }: EditJobProps) => {
+  const { isOpen, setIsOpened, close } = useDisclosure(false);
 
   const onDone = () => {
-    handleClose();
+    close();
     onUpdateDone();
   };
 
@@ -32,8 +26,8 @@ export const EditJob = ({
   return (
     <FormDialog
       action='edit'
-      open={open}
-      onOpenChange={setOpen}
+      open={isOpen}
+      onOpenChange={setIsOpened}
       label='Job'
       triggerComponent={
         <button className='w-full text-left cursor-pointer px-2 py-1.5'>
@@ -47,7 +41,7 @@ export const EditJob = ({
         </div>
       ) : (
         <EditJobForm
-          handleClose={handleClose}
+          handleClose={close}
           id={id}
           jobData={jobData}
           updateJob={updateJob}
