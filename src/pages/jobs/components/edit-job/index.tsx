@@ -18,6 +18,8 @@ export const EditJob = ({ id, onUpdateDone }: EditJobProps) => {
     onUpdateDone();
   };
 
+  // I had to call use edit job here instead of in the form
+  // because i must supply the form with initial values
   const { jobData, getJobLoading, updateJob, updateJobLoading } = useEditJob(
     onDone,
     id
