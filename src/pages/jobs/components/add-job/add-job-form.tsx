@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Loader } from '@/components/ui/loader';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Form,
   FormControl,
@@ -45,12 +46,47 @@ export const AddJobForm = ({ onDone }: AddJobFormProps) => {
     addJob(values);
   }
 
+  const logo = form.getValues().logo;
+
+  const imgPreview = logo ? URL.createObjectURL(logo) : '';
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className='flex flex-col gap-y-2'
       >
+        {/* Start Logo */}
+        <FormField
+          control={form.control}
+          name='logo'
+          render={({ field: { ref, name, onBlur, onChange } }) => (
+            <FormItem className='mx-auto'>
+              <label htmlFor='logo'>
+                <Avatar className='w-16 h-16 cursor-pointer'>
+                  <AvatarImage src={imgPreview} alt='Avatar' />
+                  <AvatarFallback>A</AvatarFallback>
+                </Avatar>
+              </label>
+
+              <FormControl>
+                <Input
+                  type='file'
+                  ref={ref}
+                  placeholder='logo'
+                  id={name}
+                  name={name}
+                  onBlur={onBlur}
+                  onChange={(e) => onChange(e.target.files?.[0])}
+                  accept='image/png, image/gif, image/jpeg'
+                  className='hidden'
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         {/* Start Title */}
         <FormField
           control={form.control}
@@ -81,28 +117,6 @@ export const AddJobForm = ({ onDone }: AddJobFormProps) => {
           )}
         />
         {/* End Description */}
-
-        {/* Start Logo */}
-        <FormField
-          control={form.control}
-          name='logo'
-          render={({ field: { ref, name, onBlur, onChange } }) => (
-            <FormItem>
-              <FormLabel>Logo</FormLabel>
-              <FormControl>
-                <Input
-                  type='file'
-                  ref={ref}
-                  placeholder='logo'
-                  name={name}
-                  onBlur={onBlur}
-                  onChange={(e) => onChange(e.target.files?.[0])}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         {/* Open Positions */}
         <FormField

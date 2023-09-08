@@ -5,6 +5,12 @@ import { IFormState, addEmployeeSchema } from './add-employee-schema';
 import { useDepartments } from '../employees-view/hooks/use-departments';
 import { useAddEmployee } from './hooks/use-add-employee';
 
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Combobox } from '@/components/ui/combobox';
+import { DatePicker } from '@/components/ui/date-picker';
+import { Loader } from '@/components/ui/loader';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Form,
   FormControl,
@@ -13,11 +19,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Combobox } from '@/components/ui/combobox';
-import { DatePicker } from '@/components/ui/date-picker';
-import { Loader } from '@/components/ui/loader';
 
 interface AddEmployeeFormProps {
   handleClose: () => void;
@@ -35,12 +36,47 @@ const AddEmployeeForm = ({ handleClose }: AddEmployeeFormProps) => {
     addEmployee(values);
   }
 
+  const avatar = form.getValues().avatar;
+
+  const imgPreview = avatar ? URL.createObjectURL(avatar) : '';
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className='flex flex-col gap-y-2'
       >
+        {/* Start Avatar */}
+        <FormField
+          control={form.control}
+          name='avatar'
+          render={({ field: { ref, name, onBlur, onChange } }) => (
+            <FormItem className='mx-auto'>
+              <label htmlFor='avatar'>
+                <Avatar className='w-16 h-16 cursor-pointer'>
+                  <AvatarImage src={imgPreview} alt='Avatar' />
+                  <AvatarFallback>A</AvatarFallback>
+                </Avatar>
+              </label>
+
+              <FormControl>
+                <Input
+                  type='file'
+                  ref={ref}
+                  placeholder='avatar'
+                  name={name}
+                  id={name}
+                  onBlur={onBlur}
+                  onChange={(e) => onChange(e.target.files?.[0])}
+                  accept='image/png, image/gif, image/jpeg'
+                  className='hidden'
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         {/* Start FirstName And LastName */}
         <div className='grid grid-cols-2 gap-5'>
           <FormField
@@ -81,29 +117,6 @@ const AddEmployeeForm = ({ handleClose }: AddEmployeeFormProps) => {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input placeholder='Email' type='email' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/* End Email */}
-
-        {/* Start Avatar */}
-        <FormField
-          control={form.control}
-          name='avatar'
-          render={({ field: { ref, name, onBlur, onChange } }) => (
-            <FormItem>
-              <FormLabel>Avatar</FormLabel>
-              <FormControl>
-                <Input
-                  type='file'
-                  ref={ref}
-                  placeholder='avatar'
-                  name={name}
-                  onBlur={onBlur}
-                  onChange={(e) => onChange(e.target.files?.[0])}
-                />
               </FormControl>
               <FormMessage />
             </FormItem>
