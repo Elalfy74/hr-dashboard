@@ -15,7 +15,7 @@ export const useJobs = () => {
   const { value: isActiveJobsView, toggle: toggleIsActive } = useBoolean(true);
 
   const handleToggle = () => {
-    setPage(1);
+    handlePageChange(0);
     toggleIsActive();
   };
 

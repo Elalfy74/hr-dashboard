@@ -24,7 +24,7 @@ interface DeleteAlertProps {
 export function DeleteAlert(props: DeleteAlertProps) {
   return (
     <AlertDialog open={props.open} onOpenChange={props.onOpenChange}>
-      <AlertDialogTrigger>{props.children}</AlertDialogTrigger>
+      <AlertDialogTrigger asChild>{props.children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
