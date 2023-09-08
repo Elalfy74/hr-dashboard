@@ -12,12 +12,12 @@ import { FilterEmployees } from './components/filter-employees';
 
 export const EmployeesView = () => {
   const {
-    data,
-    error,
-    isLoading,
+    employeesData,
+    employeesError,
+    employeesLoading,
     handlePageChange,
     pageCount,
-    currentPage,
+    paginatePage,
     statusFilter,
     handleStatusFilter,
     departmentFilter,
@@ -27,7 +27,7 @@ export const EmployeesView = () => {
 
   const { value: isTableView, toggle } = useBoolean(true);
 
-  if (error) {
+  if (employeesError) {
     return (
       <div className='text-lg font-semibold text-center text-white'>
         Something Went Wrong
@@ -35,7 +35,7 @@ export const EmployeesView = () => {
     );
   }
 
-  if (isLoading || !data) {
+  if (employeesLoading || !employeesData) {
     return (
       <div className='text-white center'>
         <Loader />
@@ -63,18 +63,18 @@ export const EmployeesView = () => {
 
       {isTableView ? (
         <EmployeesTable
-          data={data}
+          data={employeesData}
           handlePageChange={handlePageChange}
           pageCount={pageCount}
-          currentPage={currentPage}
+          paginatePage={paginatePage}
           employeesRefetch={employeesRefetch}
         />
       ) : (
         <EmployeesGrid
-          data={data}
+          data={employeesData}
           handlePageChange={handlePageChange}
           pageCount={pageCount}
-          currentPage={currentPage}
+          paginatePage={paginatePage}
           employeesRefetch={employeesRefetch}
         />
       )}

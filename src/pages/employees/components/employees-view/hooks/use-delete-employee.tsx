@@ -11,13 +11,14 @@ export const useDeleteEmployee = (onDone: () => void = () => {}) => {
   const {
     isOpen: alertOpen,
     setIsOpened: setAlertOpen,
-    close,
+    close: closeAlert,
+    open: openAlert,
   } = useDisclosure();
 
   const { mutate, isLoading } = useMutation({
     mutationFn: deleteEmployee,
     onSuccess: () => {
-      close();
+      closeAlert();
       toast({
         description: 'Employee has been deleted ',
       });
@@ -29,7 +30,8 @@ export const useDeleteEmployee = (onDone: () => void = () => {}) => {
   return {
     alertOpen,
     setAlertOpen,
+    openAlert,
     deleteEmployee: mutate,
-    isLoading,
+    deleteEmployeeLoading: isLoading,
   };
 };

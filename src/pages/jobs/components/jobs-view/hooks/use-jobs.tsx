@@ -1,22 +1,20 @@
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { getJobs, getJobsCount } from '@/services/jobs';
 import { useBoolean } from '@/hooks/use-boolean';
+import { usePaginate } from '@/hooks/use-paginate';
 
 const ITEMS_PER_PAGE = 10;
 
 export const useJobs = () => {
-  const [page, setPage] = useState(1);
-  // Because React Paginate Start From 0
-  const handlePageChange = (page: number) => setPage(page + 1);
+  const { page, paginatePage, handlePageChange, resetPage } = usePaginate();
 
-  // As We need To reset to page 1
   const { value: isActiveJobsView, toggle: toggleIsActive } = useBoolean(true);
 
+  // As We need To reset to page 1
   const handleToggle = () => {
-    handlePageChange(0);
     toggleIsActive();
+    resetPage();
   };
 
   const { data: count } = useQuery({
@@ -44,10 +42,10 @@ export const useJobs = () => {
     jobsData,
     jobsError,
     jobsLoading,
-    handlePageChange,
-    currentPage: page,
-    pageCount,
     jobsRefetch,
+    paginatePage,
+    pageCount,
+    handlePageChange,
     isActiveJobsView,
     toggleIsActive: handleToggle,
   };

@@ -13,12 +13,12 @@ import { Button } from '@/components/ui/button';
 import { Loader } from './ui/loader';
 
 interface DeleteAlertProps {
+  title: string;
   open: boolean;
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
-  title: string;
   onDelete: () => void;
-  children: React.ReactNode;
   isLoading: boolean;
+  children: React.ReactNode;
 }
 
 export function DeleteAlert(props: DeleteAlertProps) {

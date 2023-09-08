@@ -19,13 +19,13 @@ import { DataTablePagination } from './data-table-pagination';
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  handlePageChange: (page: number) => void;
+  handlePageChange: (e: { selected: number }) => void;
   pageCount?: number;
-  currentPage: number;
+  paginatePage: number;
 }
 
 export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
-  const { columns, data, pageCount, currentPage, handlePageChange } = props;
+  const { columns, data, pageCount, paginatePage, handlePageChange } = props;
 
   const table = useReactTable({
     data,
@@ -85,7 +85,7 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
         totalRows={table.getFilteredRowModel().rows.length}
         pageCount={pageCount}
         handlePageChange={handlePageChange}
-        currentPage={currentPage}
+        paginatePage={paginatePage}
       />
     </div>
   );

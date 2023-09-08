@@ -30,7 +30,7 @@ interface AddJobFormProps {
 }
 
 export const AddJobForm = ({ onDone }: AddJobFormProps) => {
-  const { addJob, isLoading } = useAddJob(onDone);
+  const { addJob, addJobLoading } = useAddJob(onDone);
 
   const form = useForm<AddJobFormState>({
     resolver: zodResolver(addJobSchema),
@@ -207,8 +207,8 @@ export const AddJobForm = ({ onDone }: AddJobFormProps) => {
             </FormItem>
           )}
         />
-        <Button type='submit' className='mt-4' disabled={isLoading}>
-          {!isLoading ? 'Submit' : <Loader />}
+        <Button type='submit' className='mt-4' disabled={addJobLoading}>
+          {!addJobLoading ? 'Submit' : <Loader />}
         </Button>
       </form>
     </Form>

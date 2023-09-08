@@ -20,10 +20,7 @@ export const EmployeeCard = ({
   return (
     <Card>
       <CardHeader className='p-3 pb-0'>
-        <EmployeeCardActions
-          id={employee.id}
-          employeesRefetch={employeesRefetch}
-        />
+        <EmployeeCardActions id={employee.id} onDone={employeesRefetch} />
       </CardHeader>
 
       <CardContent className='flex flex-col items-center px-3 pb-3'>

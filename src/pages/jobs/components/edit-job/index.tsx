@@ -11,19 +11,13 @@ interface EditJobProps {
 }
 
 export const EditJob = ({ id, onUpdateDone }: EditJobProps) => {
+  // Dialog
   const { isOpen, setIsOpened, close } = useDisclosure(false);
 
   const onDone = () => {
     close();
     onUpdateDone();
   };
-
-  // I had to call use edit job here instead of in the form
-  // because i must supply the form with initial values
-  const { jobData, getJobLoading, updateJob, updateJobLoading } = useEditJob(
-    onDone,
-    id
-  );
 
   return (
     <FormDialog
@@ -37,6 +31,30 @@ export const EditJob = ({ id, onUpdateDone }: EditJobProps) => {
         </button>
       }
     >
+      <EditJobFormDataSupply id={id} onDone={onDone} />
+    </FormDialog>
+  );
+};
+
+// I had to make this component
+// because i must supply the form with initial values
+
+interface EditJobFormDataSupplyProps {
+  id: number;
+  onDone: () => void;
+}
+
+export const EditJobFormDataSupply = ({
+  id,
+  onDone,
+}: EditJobFormDataSupplyProps) => {
+  const { jobData, getJobLoading, updateJob, updateJobLoading } = useEditJob(
+    onDone,
+    id
+  );
+
+  return (
+    <>
       {getJobLoading || !jobData ? (
         <div className='flex justify-center'>
           <Loader />
@@ -50,6 +68,6 @@ export const EditJob = ({ id, onUpdateDone }: EditJobProps) => {
           updateJobLoading={updateJobLoading}
         />
       )}
-    </FormDialog>
+    </>
   );
 };

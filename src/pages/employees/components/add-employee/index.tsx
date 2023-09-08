@@ -1,24 +1,20 @@
-import { useState } from 'react';
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { FormDialog } from '@/components/form-dialog';
 
 import AddEmployeeForm from './add-employee-form';
 
 export const AddEmployee = () => {
-  const [open, setOpen] = useState(false);
-
-  function handleClose() {
-    setOpen(false);
-  }
+  const { isOpen, setIsOpened, close } = useDisclosure();
 
   return (
     <FormDialog
       action='add'
-      open={open}
-      onOpenChange={setOpen}
+      open={isOpen}
+      onOpenChange={setIsOpened}
       label='Employee'
     >
-      <AddEmployeeForm handleClose={handleClose} />
+      <AddEmployeeForm handleClose={close} />
     </FormDialog>
   );
 };

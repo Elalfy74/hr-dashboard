@@ -3,9 +3,9 @@ import { Pagination } from '../pagination';
 interface PaginationProps {
   selectedRow: number;
   totalRows: number;
-  handlePageChange: (page: number) => void;
+  handlePageChange: (e: { selected: number }) => void;
   pageCount?: number;
-  currentPage: number;
+  paginatePage: number;
 }
 
 export const DataTablePagination = (props: PaginationProps) => {
@@ -17,8 +17,8 @@ export const DataTablePagination = (props: PaginationProps) => {
       {props.pageCount && (
         <Pagination
           pageCount={props.pageCount}
-          handlePageClick={(e) => props.handlePageChange(e.selected)}
-          page={props.currentPage - 1}
+          handlePageClick={props.handlePageChange}
+          page={props.paginatePage}
         />
       )}
     </div>

@@ -18,6 +18,6 @@ export const useAddJob = (onDone: () => void) => {
 
   return {
     addJob: mutate,
-    isLoading,
+    addJobLoading: isLoading,
   };
 };

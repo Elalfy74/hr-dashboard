@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { animated, useTrail } from '@react-spring/web';
 
 import { Pagination } from '@/components/pagination';
@@ -13,9 +12,9 @@ export const JobsView = () => {
     jobsData,
     jobsError,
     jobsLoading,
+    paginatePage,
     pageCount,
     handlePageChange,
-    currentPage,
     jobsRefetch,
     isActiveJobsView,
     toggleIsActive,
@@ -65,9 +64,9 @@ export const JobsView = () => {
       {pageCount && (
         <div className='mt-4 center'>
           <Pagination
-            handlePageClick={(e) => handlePageChange(e.selected)}
+            handlePageClick={handlePageChange}
             pageCount={pageCount}
-            page={currentPage - 1}
+            page={paginatePage}
           />
         </div>
       )}

@@ -1,29 +1,28 @@
-import { useState } from 'react';
-
 import { useDeleteEmployee } from '../hooks/use-delete-employee';
 import { CardActions } from '@/components/card-actions';
 import { useDisclosure } from '@/hooks/use-disclosure';
 
 interface EmployeeCardActions {
   id: number;
-  employeesRefetch: () => void;
+  onDone: () => void;
 }
 
-export const EmployeeCardActions = ({
-  id,
-  employeesRefetch,
-}: EmployeeCardActions) => {
+export const EmployeeCardActions = ({ id, onDone }: EmployeeCardActions) => {
   const { isOpen, setIsOpened, close } = useDisclosure();
 
   const onDeleteDone = () => {
     close();
-    employeesRefetch();
+    onDone();
   };
 
-  const { alertOpen, setAlertOpen, isLoading, deleteEmployee } =
+  const { alertOpen, setAlertOpen, deleteEmployeeLoading, deleteEmployee } =
     useDeleteEmployee(onDeleteDone);
 
+  const handleDeleteEmployee = () => deleteEmployee(id);
+
   //TODO change edit component
+  const EditEmployeeComponent = () => <span>Edit</span>;
+
   return (
     <CardActions
       title='Employee'
@@ -31,9 +30,9 @@ export const EmployeeCardActions = ({
       setAlertOpen={setAlertOpen}
       isMenuOpen={isOpen}
       setIsMenuOpen={setIsOpened}
-      handleDelete={() => deleteEmployee(id)}
-      isLoading={isLoading}
-      editComponent={<span>Edit</span>}
+      handleDelete={handleDeleteEmployee}
+      isDeleteLoading={deleteEmployeeLoading}
+      editComponent={<EditEmployeeComponent />}
     />
   );
 };

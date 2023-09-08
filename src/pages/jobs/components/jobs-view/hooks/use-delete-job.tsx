@@ -26,6 +26,6 @@ export const useDeleteJob = (onDone: () => void = () => {}) => {
     alertOpen,
     setAlertOpen,
     deleteJob: mutate,
-    isLoading,
+    deleteJobLoading: isLoading,
   };
 };

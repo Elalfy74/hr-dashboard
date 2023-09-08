@@ -25,7 +25,7 @@ interface AddEmployeeFormProps {
 
 const AddEmployeeForm = ({ handleClose }: AddEmployeeFormProps) => {
   const departments = useDepartments();
-  const { addEmployee, isLoading } = useAddEmployee(handleClose);
+  const { addEmployee, addEmployeeLoading } = useAddEmployee(handleClose);
 
   const form = useForm<IFormState>({
     resolver: zodResolver(addEmployeeSchema),
@@ -229,8 +229,8 @@ const AddEmployeeForm = ({ handleClose }: AddEmployeeFormProps) => {
         />
         {/* End Joining Date*/}
 
-        <Button type='submit' className='mt-4' disabled={isLoading}>
-          {!isLoading ? 'Submit' : <Loader />}
+        <Button type='submit' className='mt-4' disabled={addEmployeeLoading}>
+          {!addEmployeeLoading ? 'Submit' : <Loader />}
         </Button>
       </form>
     </Form>

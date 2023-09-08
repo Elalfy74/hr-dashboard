@@ -6,7 +6,13 @@ import { Pagination } from '@/components/pagination';
 import { EmployeeCard } from './employee-card';
 
 export const EmployeesGrid = (props: EmployeesData) => {
-  const { data: employees, employeesRefetch, currentPage, pageCount } = props;
+  const {
+    data: employees,
+    employeesRefetch,
+    paginatePage,
+    pageCount,
+    handlePageChange,
+  } = props;
 
   const trails = useTrail(employees.length, {
     from: { opacity: 0, y: 20 },
@@ -28,9 +34,9 @@ export const EmployeesGrid = (props: EmployeesData) => {
       {pageCount && (
         <div className='mt-4 center'>
           <Pagination
-            handlePageClick={(e) => props.handlePageChange(e.selected)}
+            handlePageClick={handlePageChange}
             pageCount={pageCount}
-            page={currentPage - 1}
+            page={paginatePage}
           />
         </div>
       )}

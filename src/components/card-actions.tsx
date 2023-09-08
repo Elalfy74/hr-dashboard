@@ -11,13 +11,13 @@ import {
 } from './ui/dropdown-menu';
 
 interface CardActionsProps {
-  handleDelete: () => void;
   title: string;
   isMenuOpen: boolean;
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
   alertOpen: boolean;
   setAlertOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isLoading: boolean;
+  handleDelete: () => void;
+  isDeleteLoading: boolean;
   editComponent: React.ReactNode;
 }
 
@@ -29,7 +29,7 @@ export const CardActions = (props: CardActionsProps) => {
     setIsMenuOpen,
     alertOpen,
     setAlertOpen,
-    isLoading,
+    isDeleteLoading,
     editComponent,
   } = props;
 
@@ -51,7 +51,7 @@ export const CardActions = (props: CardActionsProps) => {
             onOpenChange={setAlertOpen}
             title={title}
             onDelete={handleDelete}
-            isLoading={isLoading}
+            isLoading={isDeleteLoading}
           >
             <button className='w-full text-left text-red-400 cursor-pointer px-2 py-1.5'>
               Delete

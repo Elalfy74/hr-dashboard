@@ -19,6 +19,6 @@ export const useAddEmployee = (onDone: () => void) => {
 
   return {
     addEmployee: mutate,
-    isLoading,
+    addEmployeeLoading: isLoading,
   };
 };

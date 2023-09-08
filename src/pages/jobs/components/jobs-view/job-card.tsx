@@ -15,7 +15,7 @@ export const JobCard = ({ job, jobsRefetch }: JobCardProps) => {
   return (
     <Card className='h-[250px] flex flex-col'>
       <CardHeader className='p-3 pb-0'>
-        <JobCardActions id={job.id} jobsRefetch={jobsRefetch} />
+        <JobCardActions id={job.id} onDone={jobsRefetch} />
       </CardHeader>
 
       <CardContent className='flex flex-col justify-between flex-1 px-3 pb-3 -mt-3'>

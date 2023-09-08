@@ -6,14 +6,14 @@ import { columns } from './columns';
 
 export interface EmployeesData {
   data: EmployeeWithDepartment[];
-  handlePageChange: (page: number) => void;
+  handlePageChange: (e: { selected: number }) => void;
   pageCount?: number;
-  currentPage: number;
+  paginatePage: number;
   employeesRefetch: () => void;
 }
 
 export const EmployeesTable = (props: EmployeesData) => {
-  const { data, pageCount, handlePageChange, currentPage, employeesRefetch } =
+  const { data, pageCount, handlePageChange, paginatePage, employeesRefetch } =
     props;
 
   return (
@@ -23,7 +23,7 @@ export const EmployeesTable = (props: EmployeesData) => {
         data={data}
         pageCount={pageCount}
         handlePageChange={handlePageChange}
-        currentPage={currentPage}
+        paginatePage={paginatePage}
       />
     </Card>
   );

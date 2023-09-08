@@ -17,8 +17,15 @@ interface ActionsProps {
 }
 
 export const EmployeesTableActions = ({ id, onDone }: ActionsProps) => {
-  const { alertOpen, setAlertOpen, isLoading, deleteEmployee } =
-    useDeleteEmployee(onDone);
+  const {
+    alertOpen,
+    setAlertOpen,
+    openAlert,
+    deleteEmployeeLoading,
+    deleteEmployee,
+  } = useDeleteEmployee(onDone);
+
+  const handleDeleteEmployee = () => deleteEmployee(id);
 
   return (
     <div className='flex gap-2'>
@@ -42,18 +49,14 @@ export const EmployeesTableActions = ({ id, onDone }: ActionsProps) => {
 
       <DeleteAlert
         title='Employee'
-        onDelete={() => deleteEmployee(id)}
+        onDelete={handleDeleteEmployee}
         open={alertOpen}
         onOpenChange={setAlertOpen}
-        isLoading={isLoading}
+        isLoading={deleteEmployeeLoading}
       >
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              variant='destructive'
-              size='icon'
-              onClick={() => setAlertOpen(true)}
-            >
+            <Button variant='destructive' size='icon' onClick={openAlert}>
               <Trash2Icon className='w-4 h-4' />
             </Button>
           </TooltipTrigger>
