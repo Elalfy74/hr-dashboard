@@ -4,7 +4,7 @@ interface PaginationProps {
   selectedRow: number;
   totalRows: number;
   handlePageChange: (page: number) => void;
-  pageCount: number;
+  pageCount?: number;
   currentPage: number;
 }
 
@@ -14,11 +14,13 @@ export const DataTablePagination = (props: PaginationProps) => {
       <div className='flex-1 text-sm text-muted-foreground'>
         {props.selectedRow} of {props.totalRows} row(s) selected.
       </div>
-      <Pagination
-        pageCount={props.pageCount}
-        handlePageClick={(e) => props.handlePageChange(e.selected)}
-        initialPage={props.currentPage}
-      />
+      {props.pageCount && (
+        <Pagination
+          pageCount={props.pageCount}
+          handlePageClick={(e) => props.handlePageChange(e.selected)}
+          page={props.currentPage - 1}
+        />
+      )}
     </div>
   );
 };

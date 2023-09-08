@@ -67,7 +67,7 @@ export const JobsView = () => {
           <Pagination
             handlePageClick={(e) => handlePageChange(e.selected)}
             pageCount={pageCount}
-            initialPage={currentPage}
+            page={currentPage - 1}
           />
         </div>
       )}

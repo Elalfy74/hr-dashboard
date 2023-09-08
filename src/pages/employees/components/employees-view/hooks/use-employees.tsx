@@ -10,11 +10,7 @@ export const useEmployees = () => {
   const [page, setPage] = useState(1);
   // Because React Paginate Start From 0
   const handlePageChange = (page: number) => setPage(page + 1);
-
-  const { data: count } = useQuery({
-    queryKey: ['Employees Count'],
-    queryFn: getEmployeesCount,
-  });
+  const resetPage = () => handlePageChange(0);
 
   const {
     handleStatusFilter,
@@ -22,7 +18,16 @@ export const useEmployees = () => {
     statusFilter,
     departmentFilter,
     handleDepartmentFilter,
-  } = useFilters();
+  } = useFilters(resetPage);
+
+  const { data: count } = useQuery({
+    queryKey: ['Employees Count', statusAsBoolean, departmentFilter],
+    queryFn: () =>
+      getEmployeesCount({
+        active: statusAsBoolean,
+        departmentId: departmentFilter,
+      }),
+  });
 
   const {
     data,
@@ -30,11 +35,11 @@ export const useEmployees = () => {
     isLoading,
     refetch: employeesRefetch,
   } = useQuery({
-    queryKey: ['employees', page, statusAsBoolean, departmentFilter],
+    queryKey: ['Employees', page, statusAsBoolean, departmentFilter],
     queryFn: () =>
       getEmployees(page, ITEMS_PER_PAGE, {
         active: statusAsBoolean,
-        department: departmentFilter,
+        departmentId: departmentFilter,
       }),
     keepPreviousData: true,
   });

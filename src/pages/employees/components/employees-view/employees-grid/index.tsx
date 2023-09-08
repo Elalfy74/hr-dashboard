@@ -30,7 +30,7 @@ export const EmployeesGrid = (props: EmployeesData) => {
           <Pagination
             handlePageClick={(e) => props.handlePageChange(e.selected)}
             pageCount={pageCount}
-            initialPage={currentPage}
+            page={currentPage - 1}
           />
         </div>
       )}

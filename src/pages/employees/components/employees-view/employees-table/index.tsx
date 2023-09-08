@@ -16,8 +16,6 @@ export const EmployeesTable = (props: EmployeesData) => {
   const { data, pageCount, handlePageChange, currentPage, employeesRefetch } =
     props;
 
-  if (!pageCount) return;
-
   return (
     <Card className='overflow-hidden'>
       <DataTable

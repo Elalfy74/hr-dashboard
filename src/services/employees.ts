@@ -3,15 +3,15 @@ import { supabase } from './supabase';
 
 import { IFormState } from '@/pages/employees/components/add-employee/add-employee-schema';
 
-interface Filter {
+interface GetEmployeesFilter {
   active?: boolean;
-  department?: string;
+  departmentId?: number;
 }
 
 export async function getEmployees(
   page = 1,
   itemsPerPage = 10,
-  filter: Filter
+  filter: GetEmployeesFilter
 ) {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage - 1;
@@ -24,8 +24,8 @@ export async function getEmployees(
     query.eq('active', filter.active);
   }
 
-  if (filter.department) {
-    query.eq('departments.name', filter.department);
+  if (filter.departmentId) {
+    query.eq('department', filter.departmentId);
   }
 
   query.range(startIndex, endIndex);
@@ -37,10 +37,20 @@ export async function getEmployees(
   return data;
 }
 
-export async function getEmployeesCount() {
-  const { count, error } = await supabase
+export async function getEmployeesCount(filter: GetEmployeesFilter) {
+  const query = supabase
     .from('employees')
     .select('*', { count: 'exact', head: true });
+
+  if (filter.active !== undefined) {
+    query.eq('active', filter.active);
+  }
+
+  if (filter.departmentId) {
+    query.eq('department', filter.departmentId);
+  }
+
+  const { count, error } = await query;
 
   if (error) throw new Error(error.message);
 

@@ -1,8 +1,8 @@
 import { supabase } from './supabase';
 import { uploadImage } from './storage';
 
-import type { AddJobFormState } from '@/pages/jobs/add-job/add-job-schema';
-import type { EditJobFormState } from '@/pages/jobs/edit-job/edit-job-schema';
+import type { AddJobFormState } from '@/pages/jobs/components/add-job/add-job-schema';
+import type { EditJobFormState } from '@/pages/jobs/components/edit-job/edit-job-schema';
 
 interface GetJobsFilter {
   active: boolean;
@@ -31,10 +31,16 @@ export async function getJobs(
   return data;
 }
 
-export async function getJobsCount() {
-  const { count, error } = await supabase
+export async function getJobsCount(filter?: GetJobsFilter) {
+  const query = supabase
     .from('jobs')
     .select('*', { count: 'exact', head: true });
+
+  if (filter) {
+    query.eq('active', filter.active);
+  }
+
+  const { count, error } = await query;
 
   if (error) throw new Error(error.message);
 

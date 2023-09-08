@@ -11,11 +11,17 @@ export const useJobs = () => {
   // Because React Paginate Start From 0
   const handlePageChange = (page: number) => setPage(page + 1);
 
+  // As We need To reset to page 1
   const { value: isActiveJobsView, toggle: toggleIsActive } = useBoolean(true);
 
+  const handleToggle = () => {
+    setPage(1);
+    toggleIsActive();
+  };
+
   const { data: count } = useQuery({
-    queryKey: ['Jobs Count'],
-    queryFn: getJobsCount,
+    queryKey: ['Jobs Count', isActiveJobsView],
+    queryFn: () => getJobsCount({ active: isActiveJobsView }),
   });
 
   const {
@@ -43,6 +49,6 @@ export const useJobs = () => {
     pageCount,
     jobsRefetch,
     isActiveJobsView,
-    toggleIsActive,
+    toggleIsActive: handleToggle,
   };
 };

@@ -6,8 +6,8 @@ import { FilterItem } from './filter-item';
 interface FilterEmployeesProps {
   statusFilter: StatusFilter;
   handleStatusFilter: (status: StatusFilter) => void;
-  departmentFilter?: string;
-  handleDepartmentFilter: (department: string) => void;
+  departmentFilter?: number;
+  handleDepartmentFilter: (department: number) => void;
 }
 
 export const FilterEmployees = (props: FilterEmployeesProps) => {
@@ -42,12 +42,12 @@ export const FilterEmployees = (props: FilterEmployeesProps) => {
     <>
       {departments && (
         <FilterItem
-          options={departments.map(({ label }) => ({
+          options={departments.map(({ label, value }) => ({
             label,
-            value: label,
+            value: value.toString(),
           }))}
-          onSelect={handleDepartmentFilter}
-          value={departmentFilter}
+          onSelect={(value) => handleDepartmentFilter(+value)}
+          value={departmentFilter?.toString()}
           placeholder='Select a department'
         />
       )}

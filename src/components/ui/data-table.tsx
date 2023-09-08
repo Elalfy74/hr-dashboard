@@ -20,7 +20,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   handlePageChange: (page: number) => void;
-  pageCount: number;
+  pageCount?: number;
   currentPage: number;
 }
 

@@ -1,8 +1,8 @@
 import { Section } from '@/components/ui/section';
 import { Welcome } from '@/components/welcome';
 
-import { AddJob } from './add-job';
-import { JobsView } from './jobs-view';
+import { AddJob } from './components/add-job';
+import { JobsView } from './components/jobs-view';
 
 export const Jobs = () => {
   return (
