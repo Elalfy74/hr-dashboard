@@ -1,6 +1,6 @@
-import { supabase } from './supabase';
+import { supabase } from './client';
 
-const BUCKET_NAME = 'avatars';
+const BUCKET_NAME = 'images';
 
 export async function uploadImage(img: File, folder: string) {
   const imagName = new Date().toISOString() + img.name;

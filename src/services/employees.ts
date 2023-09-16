@@ -1,60 +1,29 @@
-import { uploadImage } from './storage';
-import { supabase } from './supabase';
+import { uploadImage } from './supabase/storage';
+import { BaseRepo } from './base-repo';
+import type { EmployeeWithDepartment, PaginationParam } from '@/types';
 
 import { IFormState } from '@/pages/employees/components/add-employee/add-employee-schema';
 
+const employeesRepo = new BaseRepo('employees');
+
 interface GetEmployeesFilter {
   active?: boolean;
-  departmentId?: number;
+  department?: number;
 }
 
-export async function getEmployees(
-  page = 1,
-  itemsPerPage = 10,
-  filter: GetEmployeesFilter
-) {
-  const startIndex = (page - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage - 1;
+interface GetEmployeesParam extends PaginationParam {
+  filter: GetEmployeesFilter;
+}
 
-  const query = supabase
-    .from('employees')
-    .select(`*, departments!inner (name)`);
-
-  if (filter.active !== undefined) {
-    query.eq('active', filter.active);
-  }
-
-  if (filter.departmentId) {
-    query.eq('department', filter.departmentId);
-  }
-
-  query.range(startIndex, endIndex);
-
-  const { data, error } = await query;
-
-  if (error) throw new Error(error.message);
-
-  return data;
+export async function getEmployees(param: GetEmployeesParam) {
+  return employeesRepo.findMany({
+    ...param,
+    select: `*, departments!inner (name)`,
+  }) as Promise<EmployeeWithDepartment[]>;
 }
 
 export async function getEmployeesCount(filter: GetEmployeesFilter) {
-  const query = supabase
-    .from('employees')
-    .select('*', { count: 'exact', head: true });
-
-  if (filter.active !== undefined) {
-    query.eq('active', filter.active);
-  }
-
-  if (filter.departmentId) {
-    query.eq('department', filter.departmentId);
-  }
-
-  const { count, error } = await query;
-
-  if (error) throw new Error(error.message);
-
-  return count;
+  return employeesRepo.findCount({ filter });
 }
 
 export async function addEmployee(input: IFormState) {
@@ -62,17 +31,13 @@ export async function addEmployee(input: IFormState) {
 
   const date_of_joining = input.date_of_joining.toISOString();
 
-  const { error } = await supabase.from('employees').insert({
+  return employeesRepo.create({
     ...input,
     date_of_joining,
     avatar: avatarUrl,
   });
-
-  if (error) throw new Error(error.message);
 }
 
 export async function deleteEmployee(id: number) {
-  const { error } = await supabase.from('employees').delete().eq('id', id);
-
-  if (error) throw new Error(error.message);
+  return employeesRepo.deleteOne({ id });
 }

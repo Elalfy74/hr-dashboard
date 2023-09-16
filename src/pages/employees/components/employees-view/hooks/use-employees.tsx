@@ -23,7 +23,7 @@ export const useEmployees = () => {
     queryFn: () =>
       getEmployeesCount({
         active: statusAsBoolean,
-        departmentId: departmentFilter,
+        department: departmentFilter,
       }),
   });
 
@@ -35,9 +35,13 @@ export const useEmployees = () => {
   } = useQuery({
     queryKey: ['Employees', page, statusAsBoolean, departmentFilter],
     queryFn: () =>
-      getEmployees(page, ITEMS_PER_PAGE, {
-        active: statusAsBoolean,
-        departmentId: departmentFilter,
+      getEmployees({
+        page,
+        itemsPerPage: ITEMS_PER_PAGE,
+        filter: {
+          active: statusAsBoolean,
+          department: departmentFilter,
+        },
       }),
     keepPreviousData: true,
   });

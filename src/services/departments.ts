@@ -1,9 +1,7 @@
-import { supabase } from './supabase';
+import { BaseRepo } from './base-repo';
 
-export async function getDepartments() {
-  const { data, error } = await supabase.from('departments').select();
+const departmentsRepo = new BaseRepo('departments');
 
-  if (error) throw new Error(error.message);
-
-  return data;
+export function getDepartments() {
+  return departmentsRepo.findMany({});
 }

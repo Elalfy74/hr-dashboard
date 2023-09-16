@@ -30,8 +30,10 @@ export const useJobs = () => {
   } = useQuery({
     queryKey: ['Jobs', page, isActiveJobsView],
     queryFn: () =>
-      getJobs(page, ITEMS_PER_PAGE, {
-        active: isActiveJobsView,
+      getJobs({
+        page,
+        itemsPerPage: ITEMS_PER_PAGE,
+        filter: { active: isActiveJobsView },
       }),
     keepPreviousData: true,
   });
