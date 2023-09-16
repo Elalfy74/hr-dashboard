@@ -1,9 +1,25 @@
-import { useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { Session } from '@supabase/supabase-js';
 
 import { supabase } from '../services/supabase/client';
 
-export const useSession = () => {
+interface SessionContextValue {
+  session: Session | null;
+  isLoading: boolean;
+}
+
+const SessionContext = createContext<SessionContextValue>({
+  session: null,
+  isLoading: true,
+});
+
+export const useSession = () => useContext(SessionContext);
+
+export const SessionProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [session, setSession] = useState<Session | null>(null);
 
@@ -22,5 +38,14 @@ export const useSession = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  return { session, isLoading };
+  return (
+    <SessionContext.Provider
+      value={{
+        session,
+        isLoading,
+      }}
+    >
+      {children}
+    </SessionContext.Provider>
+  );
 };

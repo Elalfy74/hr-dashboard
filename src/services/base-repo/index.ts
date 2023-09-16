@@ -19,7 +19,7 @@ export class BaseRepo<T extends Entity> {
 
     const query = supabase.from(this.entity).select();
 
-    if (this.entity === 'employees') query.select(select);
+    if (select) query.select(select);
 
     for (const key in filter) {
       if (filter[key] === undefined) continue;
