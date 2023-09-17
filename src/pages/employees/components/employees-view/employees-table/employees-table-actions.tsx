@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { PencilIcon, Trash2Icon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -9,7 +8,10 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
+import { useDisclosure } from '@/hooks/use-disclosure';
+
 import { useDeleteEmployee } from '../hooks/use-delete-employee';
+import { EditEmployee } from '../../edit-employee';
 
 interface ActionsProps {
   id: number;
@@ -25,27 +27,40 @@ export const EmployeesTableActions = ({ id, onDone }: ActionsProps) => {
     deleteEmployee,
   } = useDeleteEmployee(onDone);
 
+  // Form Dialog
+  const {
+    isOpen: formIsOpen,
+    setIsOpened: setOpenForm,
+    close: closeForm,
+  } = useDisclosure(false);
+
   const handleDeleteEmployee = () => deleteEmployee(id);
 
   return (
     <div className='flex gap-2'>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            asChild
-            variant='outline'
-            size='icon'
-            className='bg-mainPurple hover:bg-mainPurple/90'
-          >
-            <Link to={`/employees/${id}`}>
+      <EditEmployee
+        id={id}
+        onUpdateDone={onDone}
+        isOpen={formIsOpen}
+        setIsOpened={setOpenForm}
+        close={closeForm}
+      >
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant='outline'
+              size='icon'
+              className='bg-mainPurple hover:bg-mainPurple/90'
+              onClick={() => setOpenForm(true)}
+            >
               <PencilIcon className='w-4 h-4' />
-            </Link>
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Edit</p>
-        </TooltipContent>
-      </Tooltip>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Edit</p>
+          </TooltipContent>
+        </Tooltip>
+      </EditEmployee>
 
       <DeleteAlert
         title='Employee'

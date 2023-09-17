@@ -1,5 +1,5 @@
 import { supabase } from '../supabase/client';
-import type { CreateEntity, Entity } from '@/types';
+import type { CreateEntity, Entity, EntityValue } from '@/types';
 
 import {
   FindManyParam,
@@ -27,7 +27,9 @@ export class BaseRepo<T extends Entity> {
       query.eq(key, filter[key]);
     }
 
-    query.range(startIndex, endIndex);
+    query.range(startIndex, endIndex).order('id', {
+      ascending: false,
+    });
 
     const { data, error } = await query;
 
@@ -54,16 +56,20 @@ export class BaseRepo<T extends Entity> {
     return count;
   }
 
-  async findOne({ id }: FindOneParam) {
-    const { data, error } = await supabase
-      .from(this.entity)
-      .select()
-      .eq('id', id)
-      .single();
+  async findOne({ id, select }: FindOneParam) {
+    const query = supabase.from(this.entity).select();
+
+    if (select) {
+      query.select(select);
+    }
+
+    query.eq('id', id).single();
+
+    const { data, error } = await query;
 
     if (error) throw new Error(error.message);
 
-    return data;
+    return data as unknown as EntityValue<T>;
   }
 
   async create(input: CreateEntity<T>) {

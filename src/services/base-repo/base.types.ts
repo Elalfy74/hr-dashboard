@@ -11,6 +11,7 @@ export interface FindCountParam<T extends Entity> {
 
 export interface FindOneParam {
   id: number;
+  select?: string;
 }
 
 export interface UpdateOneParam<T extends Entity> extends FindOneParam {

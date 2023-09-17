@@ -1,6 +1,10 @@
-import { useDeleteEmployee } from '../hooks/use-delete-employee';
-import { CardActions } from '@/components/card-actions';
 import { useDisclosure } from '@/hooks/use-disclosure';
+
+import { CardActions } from '@/components/card-actions';
+
+import { useDeleteEmployee } from '../hooks/use-delete-employee';
+
+import { EditEmployee } from '../../edit-employee';
 
 interface EmployeeCardActions {
   id: number;
@@ -8,20 +12,35 @@ interface EmployeeCardActions {
 }
 
 export const EmployeeCardActions = ({ id, onDone }: EmployeeCardActions) => {
+  // For Menu
   const { isOpen, setIsOpened, close } = useDisclosure();
 
-  const onDeleteDone = () => {
+  // Form Dialog
+  const {
+    isOpen: formIsOpen,
+    setIsOpened: setOpenForm,
+    close: closeForm,
+  } = useDisclosure(false);
+
+  const onActionDone = () => {
     close();
     onDone();
   };
 
   const { alertOpen, setAlertOpen, deleteEmployeeLoading, deleteEmployee } =
-    useDeleteEmployee(onDeleteDone);
+    useDeleteEmployee(onActionDone);
 
   const handleDeleteEmployee = () => deleteEmployee(id);
 
-  //TODO change edit component
-  const EditEmployeeComponent = () => <span>Edit</span>;
+  const EditEmployeeComponent = () => (
+    <EditEmployee
+      id={id}
+      onUpdateDone={onActionDone}
+      isOpen={formIsOpen}
+      setIsOpened={setOpenForm}
+      close={closeForm}
+    />
+  );
 
   return (
     <CardActions

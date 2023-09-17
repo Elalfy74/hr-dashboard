@@ -2,7 +2,7 @@ import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { FormDialog } from '@/components/form-dialog';
 
-import AddEmployeeForm from './add-employee-form';
+import { AddEmployeeForm } from './add-employee-form';
 
 export const AddEmployee = () => {
   const { isOpen, setIsOpened, close } = useDisclosure();
@@ -14,7 +14,7 @@ export const AddEmployee = () => {
       onOpenChange={setIsOpened}
       label='Employee'
     >
-      <AddEmployeeForm handleClose={close} />
+      <AddEmployeeForm onDone={close} />
     </FormDialog>
   );
 };

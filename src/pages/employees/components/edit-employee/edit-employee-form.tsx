@@ -17,29 +17,49 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
+import type { EmployeeWithDepartment } from '@/types';
+
+import {
+  EditEmployeeFormState,
+  editEmployeeSchema,
+} from './edit-employee-schema';
+
 import { useDepartments } from '../employees-view/hooks/use-departments';
-import { useAddEmployee } from './hooks/use-add-employee';
 
-import { AddEmployeeFormState, addEmployeeSchema } from './add-employee-schema';
-
-interface AddEmployeeFormProps {
-  onDone: () => void;
+interface EditEmployeeFormProps {
+  id: number;
+  employeeData: EmployeeWithDepartment;
+  updateEmployee: ({
+    id,
+    input,
+  }: {
+    id: number;
+    input: EditEmployeeFormState;
+  }) => void;
+  updateEmployeeLoading: boolean;
 }
 
-export const AddEmployeeForm = ({ onDone }: AddEmployeeFormProps) => {
-  const departments = useDepartments();
-  const { addEmployee, addEmployeeLoading } = useAddEmployee(onDone);
+export const EditEmployeeForm = (props: EditEmployeeFormProps) => {
+  const { id, employeeData, updateEmployee, updateEmployeeLoading } = props;
 
-  const form = useForm<AddEmployeeFormState>({
-    resolver: zodResolver(addEmployeeSchema),
+  const departments = useDepartments();
+
+  const form = useForm<EditEmployeeFormState>({
+    resolver: zodResolver(editEmployeeSchema),
     defaultValues: {
-      active: true,
+      ...employeeData,
+      avatar: undefined,
+      date_of_joining: new Date(employeeData.date_of_joining),
     },
   });
 
-  function onSubmit(values: AddEmployeeFormState) {
-    addEmployee(values);
+  function onSubmit(values: EditEmployeeFormState) {
+    updateEmployee({
+      id,
+      input: values,
+    });
   }
+
   return (
     <Form {...form}>
       <form
@@ -55,7 +75,9 @@ export const AddEmployeeForm = ({ onDone }: AddEmployeeFormProps) => {
               <label htmlFor='avatar'>
                 <Avatar className='w-16 h-16 cursor-pointer'>
                   <AvatarImage
-                    src={value ? URL.createObjectURL(value) : ''}
+                    src={
+                      value ? URL.createObjectURL(value) : employeeData.avatar!
+                    }
                     alt='Avatar'
                   />
                   <AvatarFallback>A</AvatarFallback>
@@ -79,6 +101,14 @@ export const AddEmployeeForm = ({ onDone }: AddEmployeeFormProps) => {
             </FormItem>
           )}
         />
+
+        <FormItem>
+          <FormLabel>ID</FormLabel>
+          <FormControl>
+            <Input placeholder='ID' value={id} disabled />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
 
         {/* Start FirstName And LastName */}
         <div className='grid grid-cols-2 gap-5'>
@@ -146,7 +176,7 @@ export const AddEmployeeForm = ({ onDone }: AddEmployeeFormProps) => {
                         form.resetField('department');
                       }
                     }}
-                    value={field.value}
+                    value={field.value!}
                   />
                 </FormControl>
                 <FormMessage />
@@ -244,8 +274,8 @@ export const AddEmployeeForm = ({ onDone }: AddEmployeeFormProps) => {
           )}
         />
         {/* End Joining Date*/}
-
         {/* Active Or Inactive */}
+
         <FormField
           control={form.control}
           name='active'
@@ -263,9 +293,8 @@ export const AddEmployeeForm = ({ onDone }: AddEmployeeFormProps) => {
             </FormItem>
           )}
         />
-
-        <Button type='submit' className='mt-4' disabled={addEmployeeLoading}>
-          {!addEmployeeLoading ? 'Submit' : <Loader />}
+        <Button type='submit' className='mt-4' disabled={updateEmployeeLoading}>
+          {!updateEmployeeLoading ? 'Submit' : <Loader />}
         </Button>
       </form>
     </Form>

@@ -61,7 +61,6 @@ export const EditJobFormDataSupply = ({
         </div>
       ) : (
         <EditJobForm
-          handleClose={close}
           id={id}
           jobData={jobData}
           updateJob={updateJob}

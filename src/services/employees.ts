@@ -2,7 +2,8 @@ import { uploadImage } from './supabase/storage';
 import { BaseRepo } from './base-repo';
 import type { EmployeeWithDepartment, PaginationParam } from '@/types';
 
-import { IFormState } from '@/pages/employees/components/add-employee/add-employee-schema';
+import { AddEmployeeFormState } from '@/pages/employees/components/add-employee/add-employee-schema';
+import { EditEmployeeFormState } from '@/pages/employees/components/edit-employee/edit-employee-schema';
 
 const employeesRepo = new BaseRepo('employees');
 
@@ -26,7 +27,14 @@ export async function getEmployeesCount(filter: GetEmployeesFilter) {
   return employeesRepo.findCount({ filter });
 }
 
-export async function addEmployee(input: IFormState) {
+export async function getSingleEmployee(id: number) {
+  return employeesRepo.findOne({
+    id,
+    select: `*, departments!inner (name)`,
+  }) as Promise<EmployeeWithDepartment>;
+}
+
+export async function addEmployee(input: AddEmployeeFormState) {
   const avatarUrl = await uploadImage(input.avatar, 'avatars');
 
   const date_of_joining = input.date_of_joining.toISOString();
@@ -35,6 +43,29 @@ export async function addEmployee(input: IFormState) {
     ...input,
     date_of_joining,
     avatar: avatarUrl,
+  });
+}
+
+interface UpdateEmployeeParam {
+  id: number;
+  input: EditEmployeeFormState;
+}
+
+export async function updateEmployee({ id, input }: UpdateEmployeeParam) {
+  let avatarUrl;
+  let date_of_joining;
+
+  if (input.date_of_joining) {
+    date_of_joining = input.date_of_joining.toISOString();
+  }
+
+  if (input.avatar) {
+    avatarUrl = await uploadImage(input.avatar, 'avatars');
+  }
+
+  return employeesRepo.updateOne({
+    id,
+    input: { ...input, date_of_joining, avatar: avatarUrl },
   });
 }
 

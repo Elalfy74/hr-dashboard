@@ -12,6 +12,8 @@ export const addEmployeeSchema = z.object({
   date_of_joining: z.date(),
   salary: z.number().min(8000).max(50000),
   experience_years: z.number().min(0).max(50),
+  active: z.boolean().default(true),
 });
 
-export interface IFormState extends z.infer<typeof addEmployeeSchema> {}
+export interface AddEmployeeFormState
+  extends z.infer<typeof addEmployeeSchema> {}

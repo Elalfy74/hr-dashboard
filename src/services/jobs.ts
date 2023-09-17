@@ -40,12 +40,12 @@ export async function deleteJob(id: number) {
   return jobsRepo.deleteOne({ id });
 }
 
-interface updateJobParam {
+interface UpdateJobParam {
   id: number;
   input: EditJobFormState;
 }
 
-export async function updateJob({ id, input }: updateJobParam) {
+export async function updateJob({ id, input }: UpdateJobParam) {
   let logoUrl;
 
   if (input.logo) {

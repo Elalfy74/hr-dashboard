@@ -27,7 +27,6 @@ import { Job } from '@/types';
 import { EditJobFormState, editJobSchema } from './edit-job-schema';
 
 interface EditJobFormProps {
-  handleClose: () => void;
   id: number;
   jobData: Job;
   updateJob: ({ id, input }: { id: number; input: EditJobFormState }) => void;
@@ -97,7 +96,7 @@ export const EditJobForm = ({
         <FormItem>
           <FormLabel>ID</FormLabel>
           <FormControl>
-            <Input placeholder='Title' value={id} disabled />
+            <Input placeholder='ID' value={id} disabled />
           </FormControl>
           <FormMessage />
         </FormItem>
