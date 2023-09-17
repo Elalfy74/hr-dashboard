@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Loader } from '@/components/ui/loader';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Form,
   FormControl,
@@ -57,6 +58,42 @@ export const EditJobForm = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className='flex flex-col gap-y-2'
       >
+        {/* Start Logo */}
+        <FormField
+          control={form.control}
+          name='logo'
+          render={({ field: { ref, name, onBlur, value, onChange } }) => (
+            <FormItem className='mx-auto'>
+              <label htmlFor='logo'>
+                <Avatar className='w-16 h-16 cursor-pointer'>
+                  <AvatarImage
+                    src={value ? URL.createObjectURL(value) : jobData.logo}
+                    alt='Avatar'
+                    className='object-cover'
+                  />
+                  <AvatarFallback>A</AvatarFallback>
+                </Avatar>
+              </label>
+
+              <FormControl>
+                <Input
+                  type='file'
+                  ref={ref}
+                  placeholder='logo'
+                  id={name}
+                  name={name}
+                  onBlur={onBlur}
+                  onChange={(e) => onChange(e.target.files?.[0])}
+                  accept='image/*'
+                  className='hidden'
+                  disabled={updateJobLoading}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormItem>
           <FormLabel>ID</FormLabel>
           <FormControl>

@@ -46,10 +46,6 @@ export const AddJobForm = ({ onDone }: AddJobFormProps) => {
     addJob(values);
   }
 
-  const logo = form.getValues().logo;
-
-  const imgPreview = logo ? URL.createObjectURL(logo) : '';
-
   return (
     <Form {...form}>
       <form
@@ -60,11 +56,15 @@ export const AddJobForm = ({ onDone }: AddJobFormProps) => {
         <FormField
           control={form.control}
           name='logo'
-          render={({ field: { ref, name, onBlur, onChange } }) => (
+          render={({ field: { ref, name, onBlur, value, onChange } }) => (
             <FormItem className='mx-auto'>
               <label htmlFor='logo'>
                 <Avatar className='w-16 h-16 cursor-pointer'>
-                  <AvatarImage src={imgPreview} alt='Avatar' />
+                  <AvatarImage
+                    src={value ? URL.createObjectURL(value) : ''}
+                    alt='Avatar'
+                    className='object-cover'
+                  />
                   <AvatarFallback>A</AvatarFallback>
                 </Avatar>
               </label>
@@ -78,8 +78,9 @@ export const AddJobForm = ({ onDone }: AddJobFormProps) => {
                   name={name}
                   onBlur={onBlur}
                   onChange={(e) => onChange(e.target.files?.[0])}
-                  accept='image/png, image/gif, image/jpeg'
+                  accept='image/*'
                   className='hidden'
+                  disabled={addJobLoading}
                 />
               </FormControl>
               <FormMessage />
