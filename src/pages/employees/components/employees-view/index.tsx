@@ -2,12 +2,12 @@ import { LayoutGridIcon, TableIcon } from 'lucide-react';
 
 import { useBoolean } from '@/hooks/use-boolean';
 import { Loader } from '@/components/ui/loader';
+import { Switch } from '@/components/switch';
 
 import { useEmployees } from './hooks/use-employees';
 
 import { EmployeesGrid } from './employees-grid';
 import { EmployeesTable } from './employees-table';
-import { Switch } from '../../../../components/switch';
 import { FilterEmployees } from './components/filter-employees';
 
 export const EmployeesView = () => {

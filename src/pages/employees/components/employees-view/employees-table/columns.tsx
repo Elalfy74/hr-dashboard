@@ -7,6 +7,7 @@ import { DataTableColumnHeader } from '@/components/ui/data-table-column-header'
 
 import { Status } from '../components/status';
 import { EmployeesTableActions } from './employees-table-actions';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 
 export const columns: (
   onDone: () => void
@@ -36,11 +37,13 @@ export const columns: (
     },
     cell: ({ row }) => (
       <div className='flex items-center gap-2'>
-        <img
-          src={row.original.avatar || undefined}
-          alt='avatar'
-          className='w-8 border rounded-full'
-        />
+        <Avatar>
+          <AvatarImage
+            src={row.original.avatar || undefined}
+            alt='avatar'
+            className='object-cover'
+          />
+        </Avatar>
         {row.original.first_name} {row.original.last_name}
       </div>
     ),

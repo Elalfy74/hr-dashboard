@@ -32,7 +32,13 @@ export const EmployeesTableActions = ({ id, onDone }: ActionsProps) => {
     isOpen: formIsOpen,
     setIsOpened: setOpenForm,
     close: closeForm,
+    open: openForm,
   } = useDisclosure(false);
+
+  const onActionDone = () => {
+    closeForm();
+    onDone();
+  };
 
   const handleDeleteEmployee = () => deleteEmployee(id);
 
@@ -40,10 +46,10 @@ export const EmployeesTableActions = ({ id, onDone }: ActionsProps) => {
     <div className='flex gap-2'>
       <EditEmployee
         id={id}
-        onUpdateDone={onDone}
+        onDone={onActionDone}
         isOpen={formIsOpen}
+        open={openForm}
         setIsOpened={setOpenForm}
-        close={closeForm}
       >
         <Tooltip>
           <TooltipTrigger asChild>
@@ -51,7 +57,7 @@ export const EmployeesTableActions = ({ id, onDone }: ActionsProps) => {
               variant='outline'
               size='icon'
               className='bg-mainPurple hover:bg-mainPurple/90'
-              onClick={() => setOpenForm(true)}
+              onClick={openForm}
             >
               <PencilIcon className='w-4 h-4' />
             </Button>

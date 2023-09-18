@@ -7,27 +7,22 @@ import { EditEmployeeForm } from './edit-employee-form';
 
 interface EditEmployeeProps {
   id: number;
-  onUpdateDone: () => void;
+  onDone: () => void;
   children?: React.ReactNode;
   isOpen: boolean;
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  close: () => void;
+  open: () => void;
 }
 
 export const EditEmployee = (props: EditEmployeeProps) => {
-  // Dialog
-  const { id, onUpdateDone, children, isOpen, setIsOpened, close } = props;
-
-  const onDone = () => {
-    close();
-    onUpdateDone();
-  };
+  // Form Dialog
+  const { id, onDone, children, isOpen, setIsOpened, open } = props;
 
   const TriggerComponent: React.FC = () =>
     children || (
       <button
         className='w-full text-left cursor-pointer px-2 py-1.5'
-        onClick={() => setIsOpened(true)}
+        onClick={open}
       >
         Edit
       </button>
