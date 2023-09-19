@@ -8,6 +8,7 @@ import { Employees } from '@/pages/employees';
 import { Dashboard } from '@/pages/dashboard';
 import { Auth } from '@/pages/auth';
 import { Jobs } from '@/pages/jobs';
+import { Leaves } from '@/pages/leaves';
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
           {
             path: '/jobs',
             element: <Jobs />,
+          },
+          {
+            path: '/leaves',
+            element: <Leaves />,
           },
         ],
       },

@@ -38,7 +38,7 @@ export class BaseRepo<T extends Entity> {
     return data;
   }
 
-  async findCount({ filter }: FindCountParam<T>) {
+  async findCount({ filter, likeFilter }: FindCountParam<T>) {
     const query = supabase
       .from(this.entity)
       .select('*', { count: 'exact', head: true });
@@ -47,6 +47,12 @@ export class BaseRepo<T extends Entity> {
       if (filter[key] === undefined) continue;
 
       query.eq(key, filter[key]);
+    }
+
+    for (const key in likeFilter) {
+      if (likeFilter[key] === undefined) continue;
+
+      query.like(key, likeFilter[key] as string);
     }
 
     const { count, error } = await query;

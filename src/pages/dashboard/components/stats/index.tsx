@@ -11,7 +11,7 @@ export const Stats = () => {
       {stats.map((stat) => (
         <StateCard key={stat.takenNumber} {...stat} />
       ))}
-      <Card className=' h-[178px] relative '>
+      <Card className='h-[178px] relative'>
         <EmployeesRatio />
         <div className=' absolute pointer-events-none flex-col top-[20px] bottom-[20px] center right-[80px] left-0 text-center'>
           <h2 className='font-bold'>200</h2>

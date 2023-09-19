@@ -118,6 +118,73 @@ export interface Database {
         }
         Relationships: []
       }
+      leaves: {
+        Row: {
+          approved: boolean | null
+          comments: string | null
+          created_at: string
+          department_id: number
+          email: string
+          end_date: string | null
+          end_hour: string | null
+          first_name: string
+          id: number
+          last_name: string
+          leave_reason: string
+          leave_type_days: boolean
+          selected_day: string | null
+          start_date: string | null
+          start_hour: string | null
+        }
+        Insert: {
+          approved?: boolean | null
+          comments?: string | null
+          created_at?: string
+          department_id: number
+          email: string
+          end_date?: string | null
+          end_hour?: string | null
+          first_name: string
+          id?: number
+          last_name: string
+          leave_reason: string
+          leave_type_days: boolean
+          selected_day?: string | null
+          start_date?: string | null
+          start_hour?: string | null
+        }
+        Update: {
+          approved?: boolean | null
+          comments?: string | null
+          created_at?: string
+          department_id?: number
+          email?: string
+          end_date?: string | null
+          end_hour?: string | null
+          first_name?: string
+          id?: number
+          last_name?: string
+          leave_reason?: string
+          leave_type_days?: boolean
+          selected_day?: string | null
+          start_date?: string | null
+          start_hour?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leaves_department_id_fkey"
+            columns: ["department_id"]
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leaves_email_fkey"
+            columns: ["email"]
+            referencedRelation: "employees"
+            referencedColumns: ["email"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never

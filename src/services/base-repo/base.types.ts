@@ -7,6 +7,7 @@ export interface FindManyParam<T extends Entity> extends PaginationParam {
 
 export interface FindCountParam<T extends Entity> {
   filter?: Filter<T>;
+  likeFilter?: Filter<T>;
 }
 
 export interface FindOneParam {

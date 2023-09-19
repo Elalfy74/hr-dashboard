@@ -4,7 +4,7 @@ import { Badge } from './ui/badge';
 import { cn } from '@/lib/utils';
 
 export const appBadgeVariants = cva(
-  'rounded-full text-mainBlack font-normal capitalize ',
+  'rounded-full text-mainBlack font-normal capitalize min-w-[5rem] center',
   {
     variants: {
       variant: {

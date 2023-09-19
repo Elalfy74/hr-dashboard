@@ -38,11 +38,11 @@ const links = [
     to: '/jobs',
     icon: <ClipboardList className='w-5' />,
   },
-  {
-    title: 'candidates',
-    to: '/candidates',
-    icon: <Users className='w-5' />,
-  },
+  // {
+  //   title: 'candidates',
+  //   to: '/candidates',
+  //   icon: <Users className='w-5' />,
+  // },
   {
     title: 'leaves',
     to: '/leaves',
