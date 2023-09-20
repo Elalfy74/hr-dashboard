@@ -1,6 +1,6 @@
 import { Database } from './database.types';
 
-export type Employee = Database['public']['Tables']['employees']['Row'];
+export type Employee = EntityValue<'employees'>;
 
 export type EmployeeWithDepartment = Employee & {
   departments: {
@@ -8,7 +8,7 @@ export type EmployeeWithDepartment = Employee & {
   } | null;
 };
 
-export type Job = Database['public']['Tables']['jobs']['Row'];
+export type Job = EntityValue<'jobs'>;
 
 export type Entity = keyof Database['public']['Tables'];
 

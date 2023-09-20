@@ -1,7 +1,9 @@
-import { AppBadge } from '@/components/app-badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+import { AppBadge } from '@/components/app-badge';
+import { AppButton } from '@/components/app-button';
 
 export const PendingLeaves = () => {
   return (
@@ -10,7 +12,7 @@ export const PendingLeaves = () => {
         <CardTitle>Pending Leaves</CardTitle>
       </CardHeader>
       <CardContent>
-        <ScrollArea className='h-96'>
+        <ScrollArea className='h-[27rem]'>
           <div className='flex flex-col gap-4'>
             <LeaveRequest />
             <LeaveRequest />
@@ -36,9 +38,7 @@ export const LeaveRequest = () => (
 
     <AppBadge variant='purple'>20 May to 21 May</AppBadge>
     <div className='flex justify-end gap-3'>
-      <Button className='rounded-full bg-mainPurple' variant='ghost'>
-        Approve
-      </Button>
+      <AppButton>Approve</AppButton>
       <Button className='rounded-full' variant='destructive'>
         Reject
       </Button>

@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from './ui/dialog';
 
-import { cn } from '@/lib/utils';
+import { AppButton } from './app-button';
 
 interface FormDialogProps {
   label: string;
@@ -23,23 +23,13 @@ export const FormDialog = (props: FormDialogProps) => {
   const { action, label, open, onOpenChange, children, triggerComponent } =
     props;
 
+  const trigger: React.ReactNode = triggerComponent || (
+    <AppButton icon={<PlusIcon />}>Add {label}</AppButton>
+  );
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>
-        {triggerComponent ? (
-          triggerComponent
-        ) : (
-          <button
-            className={cn(
-              'gap-1 rounded-3xl center text-mainBlack px-3 py-2.5 bg-mainPurple h-fit font-medium',
-              'hover:bg-mainPurple/90 duration-300'
-            )}
-          >
-            <PlusIcon className='w-4' />
-            Add {label}
-          </button>
-        )}
-      </DialogTrigger>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className='sm:max-w-xl'>
         <DialogHeader>
           <DialogTitle>
