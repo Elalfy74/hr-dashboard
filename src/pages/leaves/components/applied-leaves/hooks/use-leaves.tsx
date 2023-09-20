@@ -1,6 +1,8 @@
-import { getLeaves } from '@/services/leaves';
-import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+import { formatDate } from '@/lib/utils';
+import { getLeaves } from '@/services/leaves';
 
 export const useLeaves = () => {
   const { data: leaves, isLoading: leavesLoading } = useQuery({
@@ -13,19 +15,19 @@ export const useLeaves = () => {
       }),
   });
 
-  const uniformedLeaves = useMemo(
+  const formattedLeaves = useMemo(
     () =>
       leaves?.map((leave) => ({
         id: leave.id,
         status: getStatus(leave.approved),
-        createdAt: formatDate(leave.created_at),
+        createdAt: formatDate(leave.created_at, true),
         reason: leave.leave_reason,
       })),
     [leaves]
   );
 
   return {
-    uniformedLeaves,
+    formattedLeaves,
     leavesLoading,
   };
 };
@@ -34,16 +36,6 @@ export type LeaveStatus = 'pending' | 'rejected' | 'approved';
 
 const getStatus = (approved: boolean | null): LeaveStatus => {
   if (approved === null) return 'pending';
-  else if (approved === false) return 'rejected';
-  else return 'approved';
-};
-
-const formatDate = (date: string) => {
-  const originalDate = new Date(date);
-
-  const day = originalDate.getDate();
-  const month = originalDate.toLocaleString('default', { month: 'long' });
-  const year = originalDate.getFullYear();
-
-  return `${day} ${month}, ${year}`;
+  if (approved === false) return 'rejected';
+  return 'approved';
 };

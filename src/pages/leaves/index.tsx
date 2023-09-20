@@ -15,7 +15,7 @@ export const Leaves = () => (
       <AppButton icon={<PlusIcon />}>Apply Leave</AppButton>
     </Welcome>
     <Section>
-      <div className='h-[75vh] grid grid-cols-4 grid-rows-3 gap-x-main '>
+      <div className='h-[75vh] grid grid-cols-4 grid-rows-3 gap-main '>
         <LeavesRatios />
         <Holidays />
         <AppliedLeaves />

@@ -1,16 +1,22 @@
-import type { Entity, Filter, SortParams, PaginationParam } from '@/types';
+import type {
+  Entity,
+  Filter,
+  SortParams,
+  PaginationParam,
+  NullFilter,
+} from '@/types';
 
 export interface FindManyParam<T extends Entity>
   extends PaginationParam,
     SortParams<T> {
   filter?: Filter<T>;
+  nullFilter?: NullFilter<T>;
   select?: string;
 }
 
 export interface FindCountParam<T extends Entity> {
   filter?: Filter<T>;
-  likeFilter?: Filter<T>;
-  nullFilter?: (keyof Filter<T>)[];
+  nullFilter?: NullFilter<T>;
 }
 
 export interface FindOneParam {

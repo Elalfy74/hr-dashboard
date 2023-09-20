@@ -19,6 +19,7 @@ export class BaseRepo<T extends Entity> {
       select,
       orderBy = 'id',
       asc,
+      nullFilter,
     } = param;
 
     const startIndex = (page - 1) * itemsPerPage;
@@ -34,6 +35,10 @@ export class BaseRepo<T extends Entity> {
       query.eq(key, filter[key]);
     }
 
+    nullFilter?.forEach((value) => {
+      query.is(value as string, null);
+    });
+
     query.range(startIndex, endIndex).order(orderBy as string, {
       ascending: !!asc,
     });
@@ -45,7 +50,7 @@ export class BaseRepo<T extends Entity> {
     return data;
   }
 
-  async findCount({ filter, likeFilter, nullFilter }: FindCountParam<T>) {
+  async findCount({ filter, nullFilter }: FindCountParam<T>) {
     const query = supabase
       .from(this.entity)
       .select('*', { count: 'exact', head: true });
@@ -54,12 +59,6 @@ export class BaseRepo<T extends Entity> {
       if (filter[key] === undefined) continue;
 
       query.eq(key, filter[key]);
-    }
-
-    for (const key in likeFilter) {
-      if (likeFilter[key] === undefined) continue;
-
-      query.like(key, likeFilter[key] as string);
     }
 
     nullFilter?.forEach((value) => {

@@ -1,13 +1,16 @@
+import {
+  ButtonHTMLAttributes,
+  ReactElement,
+  ReactNode,
+  cloneElement,
+} from 'react';
 import { cn } from '@/lib/utils';
-import { ReactElement, ReactNode, cloneElement } from 'react';
 
-interface AppButtonProps {
-  children: ReactNode;
+interface AppButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode;
-  onClick?: () => void;
 }
 
-export const AppButton = ({ children, icon, onClick }: AppButtonProps) => {
+export const AppButton = ({ children, icon, ...props }: AppButtonProps) => {
   let Icon: ReactElement | undefined;
 
   if (icon) {
@@ -18,10 +21,10 @@ export const AppButton = ({ children, icon, onClick }: AppButtonProps) => {
 
   return (
     <button
-      onClick={onClick}
+      {...props}
       className={cn(
         'gap-1 rounded-3xl center text-mainBlack px-3 py-2.5 bg-mainPurple h-fit font-medium',
-        'hover:bg-mainPurple/90 duration-300'
+        'hover:bg-mainPurple/90 duration-300 disabled:bg-mainPurple/70 disabled:hover:bg-mainPurple/70'
       )}
     >
       {Icon} {children}

@@ -14,7 +14,7 @@ export const SingleLeaveRatio = (props: PendingRatioProps) => {
   const { color, title, data, isLoading } = props;
 
   return (
-    <Card className='h-fit'>
+    <Card className='h-full'>
       <CardHeader>
         <CardTitle>Leaves {title}</CardTitle>
       </CardHeader>

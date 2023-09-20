@@ -4,10 +4,10 @@ import { AppBadge, appBadgeVariants } from '@/components/app-badge';
 import { Loader } from '@/components/ui/loader';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-import { type LeaveStatus, useLeaves } from './use-leaves';
+import { type LeaveStatus, useLeaves } from './hooks/use-leaves';
 
 export const AppliedLeaves = () => {
-  const { uniformedLeaves, leavesLoading } = useLeaves();
+  const { formattedLeaves, leavesLoading } = useLeaves();
 
   return (
     <Card className='flex flex-col row-span-2 '>
@@ -21,9 +21,9 @@ export const AppliedLeaves = () => {
           </div>
         )}
 
-        {uniformedLeaves && (
+        {formattedLeaves && (
           <ul className='flex flex-col justify-between h-full'>
-            {uniformedLeaves.map((leave) => (
+            {formattedLeaves.map((leave) => (
               <li key={leave.id} className='flex justify-between leaves-center'>
                 <div className='text-sm'>
                   <p className='font-semibold'>{leave.createdAt}</p>
@@ -46,5 +46,5 @@ const getBadgeVariant = (
 ): VariantProps<typeof appBadgeVariants>['variant'] => {
   if (status === 'pending') return 'purple';
   if (status === 'approved') return 'green';
-  if (status === 'rejected') return 'blue';
+  return 'blue';
 };

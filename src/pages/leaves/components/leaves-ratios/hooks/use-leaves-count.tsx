@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import {
-  getLeavesAsDaysCount,
+  getLeavesForDaysCount,
   getMarriageLeavesCount,
   getPendingLeavesCount,
   getTotalLeavesCount,
@@ -21,9 +21,9 @@ export const useLeavesCount = () => {
     queryFn: getPendingLeavesCount,
   });
 
-  const { data: asDaysLeaves, isLoading: asDaysLeavesLoading } = useQuery({
-    queryKey: ['Leaves As Days Count'],
-    queryFn: getLeavesAsDaysCount,
+  const { data: leavesForDays, isLoading: leavesForDaysLoading } = useQuery({
+    queryKey: ['Leaves For Days Count'],
+    queryFn: getLeavesForDaysCount,
   });
 
   const { data: marriageLeaves, isLoading: marriageLeavesLoading } = useQuery({
@@ -72,7 +72,7 @@ export const useLeavesCount = () => {
   });
 
   const periodLeavesData = covertCountToData({
-    otherNumb: asDaysLeaves,
+    otherNumb: leavesForDays,
     firstLabel: 'For Days',
     secondLabel: 'For Hours',
   });
@@ -85,6 +85,6 @@ export const useLeavesCount = () => {
     marriageLeavesData,
     marriageLeavesLoading,
     periodLeavesData,
-    periodLeavesLoading: asDaysLeavesLoading,
+    periodLeavesLoading: leavesForDaysLoading,
   };
 };
