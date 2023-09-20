@@ -1,10 +1,17 @@
 import { LoaderIcon } from 'lucide-react';
 
-export const Loader = ({ text }: { text?: string }) => {
+import { cn } from '@/lib/utils';
+
+interface LoaderProps {
+  text?: string;
+  className?: string;
+}
+
+export const Loader = ({ text, className }: LoaderProps) => {
   return (
     <>
-      <LoaderIcon className='w-4 h-4 mr-2 animate-spin' />
-      {text || 'Please Wait'}
+      <LoaderIcon className={cn('w-4 h-4 mr-2 animate-spin', className)} />
+      {text ?? 'Please Wait'}
     </>
   );
 };

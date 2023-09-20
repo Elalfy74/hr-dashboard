@@ -24,3 +24,8 @@ export type PaginationParam = {
   page?: number;
   itemsPerPage?: number;
 };
+
+export interface SortParams<T extends Entity> {
+  orderBy?: keyof Filter<T>;
+  asc?: boolean;
+}

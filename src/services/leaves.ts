@@ -1,16 +1,23 @@
+import { PaginationParam, SortParams } from '@/types';
+
 import { BaseRepo } from './base-repo';
 
 const leavesRepo = new BaseRepo('leaves');
 
+interface GetLeavesParam extends PaginationParam, SortParams<'leaves'> {}
+
+export const getLeaves = async (param: GetLeavesParam) => {
+  return leavesRepo.findMany(param);
+};
+
+// Count
 export const getTotalLeavesCount = async () => {
   return leavesRepo.findCount({});
 };
 
 export const getPendingLeavesCount = async () => {
   return leavesRepo.findCount({
-    filter: {
-      approved: null,
-    },
+    nullFilter: ['approved'],
   });
 };
 
@@ -24,8 +31,8 @@ export const getLeavesAsDaysCount = async () => {
 
 export const getMarriageLeavesCount = async () => {
   return leavesRepo.findCount({
-    likeFilter: {
-      leave_reason: '%marriage%',
+    filter: {
+      leave_reason: 'Marriage',
     },
   });
 };

@@ -12,7 +12,7 @@ export const PendingLeaves = () => {
         <CardTitle>Pending Leaves</CardTitle>
       </CardHeader>
       <CardContent>
-        <ScrollArea className='h-[27rem]'>
+        <ScrollArea className='h-[24rem]'>
           <div className='flex flex-col gap-4'>
             <LeaveRequest />
             <LeaveRequest />

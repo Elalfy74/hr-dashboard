@@ -12,7 +12,14 @@ export class BaseRepo<T extends Entity> {
   constructor(private entity: T) {}
 
   async findMany(param: FindManyParam<T>) {
-    const { page = 1, itemsPerPage = 10, filter, select } = param;
+    const {
+      page = 1,
+      itemsPerPage = 10,
+      filter,
+      select,
+      orderBy = 'id',
+      asc,
+    } = param;
 
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage - 1;
@@ -27,8 +34,8 @@ export class BaseRepo<T extends Entity> {
       query.eq(key, filter[key]);
     }
 
-    query.range(startIndex, endIndex).order('id', {
-      ascending: false,
+    query.range(startIndex, endIndex).order(orderBy as string, {
+      ascending: !!asc,
     });
 
     const { data, error } = await query;
@@ -38,7 +45,7 @@ export class BaseRepo<T extends Entity> {
     return data;
   }
 
-  async findCount({ filter, likeFilter }: FindCountParam<T>) {
+  async findCount({ filter, likeFilter, nullFilter }: FindCountParam<T>) {
     const query = supabase
       .from(this.entity)
       .select('*', { count: 'exact', head: true });
@@ -54,6 +61,10 @@ export class BaseRepo<T extends Entity> {
 
       query.like(key, likeFilter[key] as string);
     }
+
+    nullFilter?.forEach((value) => {
+      query.is(value as string, null);
+    });
 
     const { count, error } = await query;
 
