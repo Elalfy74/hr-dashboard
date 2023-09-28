@@ -27,6 +27,7 @@ export const LeaveRequestActions = ({
       >
         {approveLoading ? <Loader /> : 'Approve'}
       </AppButton>
+
       <Button
         className='text-base rounded-full'
         variant='destructive'

@@ -17,21 +17,21 @@ export const LeavesRatios = () => {
     <>
       <SingleLeaveRatio
         color='#CEBDF2'
-        title={'Pending'}
+        title='Pending'
         data={pendingLeavesData}
         isLoading={totalLeavesLoading || pendingLeavesLoading}
       />
 
       <SingleLeaveRatio
-        color={'#E5EDE6'}
-        title={'Marriage'}
+        color='#E5EDE6'
+        title='Marriage'
         data={marriageLeavesData}
         isLoading={totalLeavesLoading || marriageLeavesLoading}
       />
 
       <SingleLeaveRatio
-        color={'#FBE7DC'}
-        title={'Period'}
+        color='#FBE7DC'
+        title='Period'
         data={periodLeavesData}
         isLoading={totalLeavesLoading || periodLeavesLoading}
       />

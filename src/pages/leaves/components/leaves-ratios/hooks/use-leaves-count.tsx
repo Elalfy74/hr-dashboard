@@ -8,7 +8,13 @@ import {
   getTotalLeavesCount,
 } from '@/services/leaves';
 
-type MayBeNumber = number | undefined | null;
+type NumberOrNull = number | undefined | null;
+
+interface CovertCountToDataParam {
+  otherNumb: NumberOrNull;
+  firstLabel: string;
+  secondLabel: string;
+}
 
 export const useLeavesCount = () => {
   const { data: totalLeaves, isLoading: totalLeavesLoading } = useQuery({
@@ -30,12 +36,6 @@ export const useLeavesCount = () => {
     queryKey: ['Leaves Marriage Count'],
     queryFn: getMarriageLeavesCount,
   });
-
-  interface CovertCountToDataParam {
-    otherNumb: MayBeNumber;
-    firstLabel: string;
-    secondLabel: string;
-  }
 
   const covertCountToData = useCallback(
     (param: CovertCountToDataParam) => {

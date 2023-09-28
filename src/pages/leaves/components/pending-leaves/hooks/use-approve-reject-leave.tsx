@@ -1,13 +1,14 @@
+import { useMutation } from '@tanstack/react-query';
+
 import { useToast } from '@/components/ui/use-toast';
 import { approveOrRejectLeave } from '@/services/leaves';
-import { useMutation } from '@tanstack/react-query';
 
 export const useApproveOrRejectLeave = (onDone: () => void) => {
   const { toast } = useToast();
 
   const { mutate, isLoading, variables } = useMutation({
     mutationFn: approveOrRejectLeave,
-    onSuccess: (data, { action }) => {
+    onSuccess: (_, { action }) => {
       toast({
         description: `Leave has been ${action}ed`,
       });
