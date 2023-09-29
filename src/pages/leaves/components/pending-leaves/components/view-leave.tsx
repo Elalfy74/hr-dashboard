@@ -13,6 +13,11 @@ import {
 import type { LeaveWithDepartment } from '@/types';
 
 import { LeaveRequestActions } from './leave-request-actions';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface ViewLeaveProps {
   leave: LeaveWithDepartment;
@@ -24,12 +29,17 @@ interface ViewLeaveProps {
 export const ViewLeave = (props: ViewLeaveProps) => {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button variant='outline' size='icon'>
-          <EyeIcon className='w-4 h-4' />
-        </Button>
-      </DialogTrigger>
-      <DialogContent className='sm:max-w-xl'>
+      <Tooltip>
+        <DialogTrigger asChild>
+          <TooltipTrigger asChild>
+            <Button variant='outline' size='icon'>
+              <EyeIcon className='w-4 h-4' />
+            </Button>
+          </TooltipTrigger>
+        </DialogTrigger>
+        <TooltipContent>View</TooltipContent>
+      </Tooltip>
+      <DialogContent className='sm:max-w-xl '>
         <DialogHeader>
           <DialogTitle>Leave Info</DialogTitle>
         </DialogHeader>

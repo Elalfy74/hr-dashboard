@@ -13,14 +13,7 @@ interface EmployeeCardActions {
 
 export const EmployeeCardActions = ({ id, onDone }: EmployeeCardActions) => {
   // For Menu
-  const { isOpen, setIsOpened, close } = useDisclosure();
-
-  // Form Dialog
-  const {
-    isOpen: formIsOpen,
-    setIsOpened: setOpenForm,
-    close: closeForm,
-  } = useDisclosure(false);
+  const { isOpen, setIsOpened, close } = useDisclosure(false);
 
   const onActionDone = () => {
     close();
@@ -32,14 +25,8 @@ export const EmployeeCardActions = ({ id, onDone }: EmployeeCardActions) => {
 
   const handleDeleteEmployee = () => deleteEmployee(id);
 
-  const EditEmployeeComponent = () => (
-    <EditEmployee
-      id={id}
-      onUpdateDone={onActionDone}
-      isOpen={formIsOpen}
-      setIsOpened={setOpenForm}
-      close={closeForm}
-    />
+  const EditEmployeeComponent: React.FC = () => (
+    <EditEmployee id={id} onDone={onActionDone} />
   );
 
   return (

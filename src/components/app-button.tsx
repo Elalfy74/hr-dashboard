@@ -24,7 +24,7 @@ export const AppButton = ({ children, icon, ...props }: AppButtonProps) => {
       {...props}
       className={cn(
         'gap-1 rounded-3xl center text-mainBlack px-3 py-2.5 bg-mainPurple h-fit font-medium',
-        'hover:bg-mainPurple/90 duration-300 disabled:bg-mainPurple/70 disabled:hover:bg-mainPurple/70'
+        'hover:bg-opacity-90 duration-300'
       )}
     >
       {Icon} {children}

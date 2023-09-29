@@ -9,10 +9,10 @@ export const useAddJob = (onDone: () => void) => {
   const { mutate, isLoading } = useMutation({
     mutationFn: addJob,
     onSuccess: () => {
+      onDone();
       toast({
         description: 'Job has been added.',
       });
-      onDone();
     },
   });
 

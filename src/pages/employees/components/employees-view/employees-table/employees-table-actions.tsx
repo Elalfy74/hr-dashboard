@@ -8,8 +8,6 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-import { useDisclosure } from '@/hooks/use-disclosure';
-
 import { useDeleteEmployee } from '../hooks/use-delete-employee';
 import { EditEmployee } from '../../edit-employee';
 
@@ -27,45 +25,27 @@ export const EmployeesTableActions = ({ id, onDone }: ActionsProps) => {
     deleteEmployee,
   } = useDeleteEmployee(onDone);
 
-  // Form Dialog
-  const {
-    isOpen: formIsOpen,
-    setIsOpened: setOpenForm,
-    close: closeForm,
-    open: openForm,
-  } = useDisclosure(false);
-
-  const onActionDone = () => {
-    closeForm();
-    onDone();
-  };
-
   const handleDeleteEmployee = () => deleteEmployee(id);
 
   return (
     <div className='flex gap-2'>
-      <EditEmployee
-        id={id}
-        onDone={onActionDone}
-        isOpen={formIsOpen}
-        open={openForm}
-        setIsOpened={setOpenForm}
-      >
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant='outline'
-              size='icon'
-              className='bg-mainPurple hover:bg-mainPurple/90'
-              onClick={openForm}
-            >
-              <PencilIcon className='w-4 h-4' />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Edit</p>
-          </TooltipContent>
-        </Tooltip>
+      <EditEmployee id={id} onDone={onDone}>
+        <Button
+          variant='outline'
+          size='icon'
+          className='bg-mainPurple hover:bg-mainPurple/90'
+        >
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className='w-full h-full center'>
+                <PencilIcon className='w-4 h-4' />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Edit</p>
+            </TooltipContent>
+          </Tooltip>
+        </Button>
       </EditEmployee>
 
       <DeleteAlert
