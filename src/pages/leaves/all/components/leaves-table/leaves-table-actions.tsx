@@ -8,23 +8,30 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-import { useDeleteEmployee } from '../hooks/use-delete-employee';
-import { EditEmployee } from '../../edit-employee';
+import { useDeleteEntity } from '@/hooks/use-delete-entity';
+
+import { deleteLeave } from '@/services/leaves';
+import { EditLeave } from '../edit-leave';
 
 interface ActionsProps {
   id: number;
   onDone: () => void;
 }
 
-export const EmployeesTableActions = ({ id, onDone }: ActionsProps) => {
-  const { alertOpen, setAlertOpen, deleteEntity, isDeleting } =
-    useDeleteEmployee(onDone);
+export const LeavesTableActions = ({ id, onDone }: ActionsProps) => {
+  const { alertOpen, setAlertOpen, deleteEntity, isDeleting } = useDeleteEntity(
+    {
+      deleteFun: deleteLeave,
+      entity: 'Leave',
+      onDone,
+    }
+  );
 
-  const handleDeleteEmployee = () => deleteEntity(id);
+  const handleDeleteLeave = () => deleteEntity(id);
 
   return (
     <div className='flex gap-2'>
-      <EditEmployee id={id} onDone={onDone}>
+      <EditLeave id={id} onDone={onDone}>
         <Button
           variant='outline'
           size='icon'
@@ -41,11 +48,11 @@ export const EmployeesTableActions = ({ id, onDone }: ActionsProps) => {
             </TooltipContent>
           </Tooltip>
         </Button>
-      </EditEmployee>
+      </EditLeave>
 
       <DeleteAlert
-        title='Employee'
-        onDelete={handleDeleteEmployee}
+        title='Leave'
+        onDelete={handleDeleteLeave}
         open={alertOpen}
         onOpenChange={setAlertOpen}
         isLoading={isDeleting}

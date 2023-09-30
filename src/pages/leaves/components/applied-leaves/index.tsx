@@ -1,10 +1,8 @@
-import type { VariantProps } from 'class-variance-authority';
-
-import { AppBadge, appBadgeVariants } from '@/components/app-badge';
 import { Loader } from '@/components/ui/loader';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-import { type LeaveStatus, useLeaves } from './hooks/use-leaves';
+import { useLeaves } from '../../hooks/use-leaves';
+import { LeaveStatusBadge } from '../leave-status-badge';
 
 export const AppliedLeaves = () => {
   const { formattedLeaves, leavesLoading } = useLeaves();
@@ -26,12 +24,12 @@ export const AppliedLeaves = () => {
             {formattedLeaves.map((leave) => (
               <li key={leave.id} className='flex justify-between leaves-center'>
                 <div className='text-sm'>
-                  <p className='font-semibold'>{leave.createdAt}</p>
-                  <p className='capitalize text-zinc-400'>{leave.reason}</p>
+                  <p className='font-semibold'>{leave.created_at}</p>
+                  <p className='capitalize text-zinc-400'>
+                    {leave.leave_reason}
+                  </p>
                 </div>
-                <AppBadge variant={getBadgeVariant(leave.status)}>
-                  {leave.status}
-                </AppBadge>
+                <LeaveStatusBadge status={leave.status} />
               </li>
             ))}
           </ul>
@@ -39,12 +37,4 @@ export const AppliedLeaves = () => {
       </CardContent>
     </Card>
   );
-};
-
-const getBadgeVariant = (
-  status: LeaveStatus
-): VariantProps<typeof appBadgeVariants>['variant'] => {
-  if (status === 'pending') return 'purple';
-  if (status === 'approved') return 'green';
-  return 'blue';
 };

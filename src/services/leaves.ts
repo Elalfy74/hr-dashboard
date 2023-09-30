@@ -1,4 +1,10 @@
-import { Filter, NullFilter, PaginationParam, SortParams } from '@/types';
+import {
+  Filter,
+  LeaveWithDepartment,
+  NullFilter,
+  PaginationParam,
+  SortParams,
+} from '@/types';
 
 import { BaseRepo } from './base-repo';
 
@@ -14,7 +20,7 @@ export const getLeaves = async (param: GetLeavesParam) => {
   return leavesRepo.findMany({
     ...param,
     select: param.withDepartment ? `*, departments!inner (name)` : undefined,
-  });
+  }) as unknown as LeaveWithDepartment[];
 };
 
 interface UpdateLeaveParam {
@@ -69,3 +75,11 @@ export const getMarriageLeavesCount = async () => {
     },
   });
 };
+
+export async function deleteLeave(id: number) {
+  return leavesRepo.deleteOne({ id });
+}
+
+export async function getSingleLeave(id: number) {
+  return leavesRepo.findOne({ id });
+}

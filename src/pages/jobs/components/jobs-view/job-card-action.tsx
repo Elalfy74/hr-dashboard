@@ -1,8 +1,9 @@
-import { useDisclosure } from '@/hooks/use-disclosure';
-
 import { CardActions } from '@/components/card-actions';
 
-import { useDeleteJob } from './hooks/use-delete-job';
+import { useDisclosure } from '@/hooks/use-disclosure';
+import { useDeleteEntity } from '@/hooks/use-delete-entity';
+
+import { deleteJob } from '@/services/jobs';
 import { EditJob } from '../edit-job';
 
 interface JobCardActions {
@@ -19,10 +20,15 @@ export const JobCardActions = ({ id, onDone }: JobCardActions) => {
     onDone();
   };
 
-  const { alertOpen, setAlertOpen, deleteJobLoading, deleteJob } =
-    useDeleteJob(onActionDone);
+  const { alertOpen, setAlertOpen, deleteEntity, isDeleting } = useDeleteEntity(
+    {
+      deleteFun: deleteJob,
+      entity: 'Job',
+      onDone: onActionDone,
+    }
+  );
 
-  const handleDeleteJob = () => deleteJob(id);
+  const handleDeleteJob = () => deleteEntity(id);
 
   const EditJobComponent: React.FC = () => (
     <EditJob id={id} onUpdateDone={onActionDone} />
@@ -36,7 +42,7 @@ export const JobCardActions = ({ id, onDone }: JobCardActions) => {
       isMenuOpen={isOpen}
       setIsMenuOpen={setIsOpened}
       handleDelete={handleDeleteJob}
-      isDeleteLoading={deleteJobLoading}
+      isDeleteLoading={isDeleting}
       editComponent={<EditJobComponent />}
     />
   );

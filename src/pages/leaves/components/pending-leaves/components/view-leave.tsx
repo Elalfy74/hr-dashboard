@@ -9,20 +9,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-
-import type { LeaveWithDepartment } from '@/types';
-
-import { LeaveRequestActions } from './leave-request-actions';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
+import type { LeaveWithDepartment } from '@/types';
+
+import { LeaveRequestActions } from './leave-request-actions';
+import { formatLeavePeriodAndTime } from '../../leave-period-badge';
+
 interface ViewLeaveProps {
   leave: LeaveWithDepartment;
-  leavePeriod: string;
-  leaveTime?: string;
+
   refetch: () => void;
 }
 
@@ -50,6 +50,8 @@ export const ViewLeave = (props: ViewLeaveProps) => {
 };
 
 const ViewLeaveContent = ({ leave, ...props }: ViewLeaveProps) => {
+  const { leavePeriod, leaveTime } = formatLeavePeriodAndTime(leave);
+
   return (
     <div className='flex flex-col gap-3'>
       <TextField
@@ -63,11 +65,9 @@ const ViewLeaveContent = ({ leave, ...props }: ViewLeaveProps) => {
 
       <TextField label='Leave Reason' text={leave.leave_reason} />
 
-      <TextField label='Leave Period' text={props.leavePeriod} />
+      <TextField label='Leave Period' text={leavePeriod} />
 
-      {props.leaveTime && (
-        <TextField label='Leave Time' text={props.leaveTime} />
-      )}
+      {leaveTime && <TextField label='Leave Time' text={leaveTime} />}
 
       {leave.comments && <TextField label='Comments' text={leave.comments} />}
 

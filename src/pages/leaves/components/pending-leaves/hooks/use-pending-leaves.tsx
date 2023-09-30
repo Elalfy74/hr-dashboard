@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import type { LeaveWithDepartment } from '@/types';
 import { convertTo12HourFormat, formatDate } from '@/lib/utils';

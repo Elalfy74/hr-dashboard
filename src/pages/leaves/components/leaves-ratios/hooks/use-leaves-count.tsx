@@ -5,8 +5,8 @@ import {
   getLeavesForDaysCount,
   getMarriageLeavesCount,
   getPendingLeavesCount,
-  getTotalLeavesCount,
 } from '@/services/leaves';
+import { useTotalLeavesCount } from '../../../hooks/use-total-leaves-count';
 
 type NumberOrNull = number | undefined | null;
 
@@ -17,10 +17,7 @@ interface CovertCountToDataParam {
 }
 
 export const useLeavesCount = () => {
-  const { data: totalLeaves, isLoading: totalLeavesLoading } = useQuery({
-    queryKey: ['Leaves Count'],
-    queryFn: getTotalLeavesCount,
-  });
+  const { totalLeaves, totalLeavesLoading } = useTotalLeavesCount();
 
   const { data: pendingLeaves, isLoading: pendingLeavesLoading } = useQuery({
     queryKey: ['Leaves Pending Count'],

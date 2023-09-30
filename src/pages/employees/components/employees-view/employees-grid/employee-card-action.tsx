@@ -20,10 +20,10 @@ export const EmployeeCardActions = ({ id, onDone }: EmployeeCardActions) => {
     onDone();
   };
 
-  const { alertOpen, setAlertOpen, deleteEmployeeLoading, deleteEmployee } =
+  const { alertOpen, setAlertOpen, deleteEntity, isDeleting } =
     useDeleteEmployee(onActionDone);
 
-  const handleDeleteEmployee = () => deleteEmployee(id);
+  const handleDeleteEmployee = () => deleteEntity(id);
 
   const EditEmployeeComponent: React.FC = () => (
     <EditEmployee id={id} onDone={onActionDone} />
@@ -37,7 +37,7 @@ export const EmployeeCardActions = ({ id, onDone }: EmployeeCardActions) => {
       isMenuOpen={isOpen}
       setIsMenuOpen={setIsOpened}
       handleDelete={handleDeleteEmployee}
-      isDeleteLoading={deleteEmployeeLoading}
+      isDeleteLoading={isDeleting}
       editComponent={<EditEmployeeComponent />}
     />
   );

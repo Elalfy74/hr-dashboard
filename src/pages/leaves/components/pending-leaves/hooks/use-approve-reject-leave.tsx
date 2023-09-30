@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { useToast } from '@/components/ui/use-toast';
+
 import { approveOrRejectLeave } from '@/services/leaves';
 
 export const useApproveOrRejectLeave = (onDone: () => void) => {

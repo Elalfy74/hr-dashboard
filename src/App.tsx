@@ -13,8 +13,8 @@ export function App() {
         <SessionProvider>
           <RouterProvider router={router} />
         </SessionProvider>
-        <Toaster />
       </TooltipProvider>
+      <Toaster />
     </QueryProvider>
   );
 }

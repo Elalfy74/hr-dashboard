@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader } from '@/components/ui/loader';
@@ -11,8 +13,11 @@ export const PendingLeaves = () => {
 
   return (
     <Card className='col-span-2 row-span-2'>
-      <CardHeader>
+      <CardHeader className='flex-row justify-between'>
         <CardTitle>Pending Leaves</CardTitle>
+        <Link to='/leaves/all' className='text-blue-500 hover:text-blue-700'>
+          See All
+        </Link>
       </CardHeader>
       <CardContent>
         {pendingLeavesLoading && (

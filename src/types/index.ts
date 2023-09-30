@@ -15,6 +15,12 @@ export type Leave = EntityValue<'leaves'>;
 
 export type LeaveWithDepartment = Leave & WithDepartment;
 
+export type LeaveStatus = 'pending' | 'rejected' | 'approved';
+
+export type FormattedLeave = LeaveWithDepartment & {
+  status: LeaveStatus;
+};
+
 export type Entity = keyof Database['public']['Tables'];
 
 export type EntityValue<T extends Entity> =

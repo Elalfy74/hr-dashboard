@@ -9,6 +9,7 @@ import { Dashboard } from '@/pages/dashboard';
 import { Auth } from '@/pages/auth';
 import { Jobs } from '@/pages/jobs';
 import { Leaves } from '@/pages/leaves';
+import { AllLeaves } from '@/pages/leaves/all';
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +37,16 @@ export const router = createBrowserRouter([
           },
           {
             path: '/leaves',
-            element: <Leaves />,
+            children: [
+              {
+                path: '',
+                element: <Leaves />,
+              },
+              {
+                path: 'all',
+                element: <AllLeaves />,
+              },
+            ],
           },
         ],
       },
