@@ -11,6 +11,10 @@ const ITEMS_PER_PAGE = 10;
 export const LeavesTable = () => {
   const { totalLeaves } = useTotalLeavesCount();
 
+  const pageCount = totalLeaves
+    ? Math.ceil(totalLeaves / ITEMS_PER_PAGE)
+    : undefined;
+
   const {
     formattedLeaves,
     leavesLoading,
@@ -18,10 +22,6 @@ export const LeavesTable = () => {
     handlePageChange,
     paginatePage,
   } = useLeaves(ITEMS_PER_PAGE);
-
-  const pageCount = totalLeaves
-    ? Math.ceil(totalLeaves / ITEMS_PER_PAGE)
-    : undefined;
 
   if (leavesLoading || !formattedLeaves) {
     return (

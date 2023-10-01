@@ -1,4 +1,4 @@
-import { PencilIcon, Trash2Icon } from 'lucide-react';
+import { Trash2Icon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { DeleteAlert } from '@/components/delete-alert';
@@ -8,17 +8,18 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
+import type { FormattedLeave } from '@/types';
 import { useDeleteEntity } from '@/hooks/use-delete-entity';
 
 import { deleteLeave } from '@/services/leaves';
-import { EditLeave } from '../edit-leave';
+import { ViewLeave } from '@/pages/leaves/components/view-leave';
 
 interface ActionsProps {
-  id: number;
+  leave: FormattedLeave;
   onDone: () => void;
 }
 
-export const LeavesTableActions = ({ id, onDone }: ActionsProps) => {
+export const LeavesTableActions = ({ leave, onDone }: ActionsProps) => {
   const { alertOpen, setAlertOpen, deleteEntity, isDeleting } = useDeleteEntity(
     {
       deleteFun: deleteLeave,
@@ -27,28 +28,11 @@ export const LeavesTableActions = ({ id, onDone }: ActionsProps) => {
     }
   );
 
-  const handleDeleteLeave = () => deleteEntity(id);
+  const handleDeleteLeave = () => deleteEntity(leave.id);
 
   return (
     <div className='flex gap-2'>
-      <EditLeave id={id} onDone={onDone}>
-        <Button
-          variant='outline'
-          size='icon'
-          className='bg-mainPurple hover:bg-mainPurple/90'
-        >
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className='w-full h-full center'>
-                <PencilIcon className='w-4 h-4' />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Edit</p>
-            </TooltipContent>
-          </Tooltip>
-        </Button>
-      </EditLeave>
+      <ViewLeave leave={leave} refetch={onDone} />
 
       <DeleteAlert
         title='Leave'

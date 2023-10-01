@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { usePaginate } from '@/hooks/use-paginate';
-import { formatDate } from '@/lib/utils';
+import { convertTo12HourFormat, formatDate } from '@/lib/utils';
 import type { FormattedLeave, LeaveStatus } from '@/types';
 
 import { getLeaves } from '@/services/leaves';
@@ -33,6 +33,12 @@ export const useLeaves = (itemsPerPage?: number) => {
         ...leave,
         status: getLeaveStatus(leave.approved),
         created_at: formatDate(leave.created_at, true)!,
+        start_date: formatDate(leave.start_date),
+        end_date: formatDate(leave.end_date),
+
+        selected_day: formatDate(leave.selected_day),
+        start_hour: convertTo12HourFormat(leave.start_hour),
+        end_hour: convertTo12HourFormat(leave.end_hour),
       })),
     [leaves]
   );

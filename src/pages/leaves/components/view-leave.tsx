@@ -1,4 +1,4 @@
-import { EyeIcon } from 'lucide-react';
+import { CheckCircle, CheckIcon, EyeIcon, XCircle, XIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { TextField } from '@/components/ui/text-field';
@@ -17,8 +17,9 @@ import {
 
 import type { LeaveWithDepartment } from '@/types';
 
-import { LeaveRequestActions } from './leave-request-actions';
-import { formatLeavePeriodAndTime } from '../../leave-period-badge';
+import { LeaveRequestActions } from './pending-leaves/components/leave-request-actions';
+import { formatLeavePeriodAndTime } from './leave-period-badge';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface ViewLeaveProps {
   leave: LeaveWithDepartment;
@@ -54,6 +55,24 @@ const ViewLeaveContent = ({ leave, ...props }: ViewLeaveProps) => {
 
   return (
     <div className='flex flex-col gap-3'>
+      {leave.approved === false && (
+        <Alert variant='destructive'>
+          <AlertTitle>Rejected</AlertTitle>
+          <AlertDescription className='flex gap-2'>
+            This Leave has been Rejected
+            <XCircle className='w-4 h-4' />
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {leave.approved && (
+        <Alert variant='default' className='text-green-800 border-green-400'>
+          <AlertTitle>Approved</AlertTitle>
+          <AlertDescription className='flex gap-2'>
+            This Leave has been Approved <CheckCircle className='w-4 h-4' />
+          </AlertDescription>
+        </Alert>
+      )}
       <TextField
         label='Full Name'
         text={`${leave.first_name} ${leave.last_name}`}
@@ -71,9 +90,11 @@ const ViewLeaveContent = ({ leave, ...props }: ViewLeaveProps) => {
 
       {leave.comments && <TextField label='Comments' text={leave.comments} />}
 
-      <div className='flex items-center justify-center gap-10 mt-4'>
-        <LeaveRequestActions id={leave.id} onDone={props.refetch} />
-      </div>
+      {leave.approved === null && (
+        <div className='flex items-center justify-center gap-10 mt-4'>
+          <LeaveRequestActions id={leave.id} onDone={props.refetch} />
+        </div>
+      )}
     </div>
   );
 };

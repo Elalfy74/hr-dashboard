@@ -1,6 +1,6 @@
 import type { LeaveWithDepartment } from '@/types';
 
-import { ViewLeave } from './view-leave';
+import { ViewLeave } from '../../view-leave';
 import { LeaveRequestActions } from './leave-request-actions';
 import { LeavePeriodBadge } from '../../leave-period-badge';
 

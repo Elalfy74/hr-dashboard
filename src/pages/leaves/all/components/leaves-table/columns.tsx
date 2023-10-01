@@ -86,9 +86,7 @@ export const columns: (onDone: () => void) => ColumnDef<FormattedLeave>[] = (
     id: 'actions',
     header: 'Action',
     cell: ({ row }) => {
-      const { id } = row.original;
-
-      return <LeavesTableActions id={id} onDone={onDone} />;
+      return <LeavesTableActions leave={row.original} onDone={onDone} />;
     },
   },
 ];
