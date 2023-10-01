@@ -1,7 +1,7 @@
 import { useDepartments } from '../hooks/use-departments';
 import type { StatusFilter } from '../hooks/use-filters';
 
-import { FilterItem } from './filter-item';
+import { FilterItem } from '@/components/filter-item';
 
 interface FilterEmployeesProps {
   statusFilter: StatusFilter;

@@ -1,35 +1,27 @@
 import { DataTable } from '@/components/ui/data-table';
 import { Card } from '@/components/ui/card';
-import { Loader } from '@/components/ui/loader';
 
-import { useLeaves } from '../../../hooks/use-leaves';
-import { useTotalLeavesCount } from '../../../hooks/use-total-leaves-count';
+import type { FormattedLeave } from '@/types';
+
 import { columns } from './columns';
 
-const ITEMS_PER_PAGE = 10;
+interface LeavesTableProps {
+  formattedLeaves: FormattedLeave[];
+  refetchLeaves: () => void;
+  pageCount: number;
 
-export const LeavesTable = () => {
-  const { totalLeaves } = useTotalLeavesCount();
+  handlePageChange: (e: { selected: number }) => void;
+  paginatePage: number;
+}
 
-  const pageCount = totalLeaves
-    ? Math.ceil(totalLeaves / ITEMS_PER_PAGE)
-    : undefined;
-
+export const LeavesTable = (props: LeavesTableProps) => {
   const {
     formattedLeaves,
-    leavesLoading,
     refetchLeaves,
+    pageCount,
     handlePageChange,
     paginatePage,
-  } = useLeaves(ITEMS_PER_PAGE);
-
-  if (leavesLoading || !formattedLeaves) {
-    return (
-      <div className='center'>
-        <Loader text='' className='w-10 h-10 text-white' />
-      </div>
-    );
-  }
+  } = props;
 
   return (
     <Card className='overflow-hidden'>

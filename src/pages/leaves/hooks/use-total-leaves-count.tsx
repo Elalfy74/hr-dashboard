@@ -1,11 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getTotalLeavesCount } from '@/services/leaves';
+import type { LeaveStatus } from '@/types';
 
-export const useTotalLeavesCount = () => {
+import { getTotalLeavesCount } from '@/services/leaves';
+import { getFilter } from './use-leaves';
+
+export const useTotalLeavesCount = (status?: LeaveStatus) => {
+  const filterValue = getFilter(status);
+
+  const filter = typeof filterValue === 'boolean' ? filterValue : undefined;
+  const nullFilter = typeof filterValue === 'boolean' ? undefined : filterValue;
+
   const { data: totalLeaves, isLoading: totalLeavesLoading } = useQuery({
-    queryKey: ['Leaves Count'],
-    queryFn: getTotalLeavesCount,
+    queryKey: ['Leaves Count', status],
+    queryFn: () =>
+      getTotalLeavesCount({
+        filter: {
+          approved: filter,
+        },
+        nullFilter,
+      }),
+    keepPreviousData: true,
   });
 
   return {

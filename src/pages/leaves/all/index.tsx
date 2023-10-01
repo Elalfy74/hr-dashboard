@@ -4,7 +4,7 @@ import { AppButton } from '@/components/app-button';
 import { Section } from '@/components/ui/section';
 import { Welcome } from '@/components/welcome';
 
-import { LeavesTable } from './components/leaves-table';
+import { LeavesView } from './components/leaves-view';
 
 export const AllLeaves = () => {
   return (
@@ -13,7 +13,7 @@ export const AllLeaves = () => {
         <AppButton icon={<PlusIcon />}>Add Leaves</AppButton>
       </Welcome>
       <Section>
-        <LeavesTable />
+        <LeavesView />
       </Section>
     </>
   );

@@ -50,8 +50,12 @@ export const approveOrRejectLeave = async ({
 };
 
 // Count
-export const getTotalLeavesCount = async () => {
-  return leavesRepo.findCount({});
+interface GetTotalLeavesCountParam {
+  filter?: Filter<'leaves'>;
+  nullFilter?: NullFilter<'leaves'>;
+}
+export const getTotalLeavesCount = async (param: GetTotalLeavesCountParam) => {
+  return leavesRepo.findCount(param);
 };
 
 export const getPendingLeavesCount = async () => {
