@@ -17,9 +17,15 @@ export const LeavesView = () => {
     paginatePage,
     leaveStatus,
     handleChangeStatus,
+    filter,
+    nullFilter,
   } = useLeaves(ITEMS_PER_PAGE);
 
-  const { totalLeaves } = useTotalLeavesCount(leaveStatus);
+  const { totalLeaves } = useTotalLeavesCount({
+    status: leaveStatus,
+    filter,
+    nullFilter,
+  });
 
   const pageCount = totalLeaves
     ? Math.ceil(totalLeaves / ITEMS_PER_PAGE)

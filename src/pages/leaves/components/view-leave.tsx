@@ -1,4 +1,4 @@
-import { CheckCircle, CheckIcon, EyeIcon, XCircle, XIcon } from 'lucide-react';
+import { CheckCircle, EyeIcon, XCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { TextField } from '@/components/ui/text-field';
