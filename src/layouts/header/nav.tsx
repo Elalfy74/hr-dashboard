@@ -1,10 +1,4 @@
-import {
-  LayoutGrid,
-  User2,
-  ClipboardList,
-  Users,
-  MenuSquare,
-} from 'lucide-react';
+import { LayoutGrid, User2, ClipboardList, MenuSquare } from 'lucide-react';
 
 import { NavLink } from './nav-link';
 
